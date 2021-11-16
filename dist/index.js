@@ -1,47 +1,64 @@
-import core from "@actions/core";
-import { S3Client } from "@aws-sdk/client-s3";
-import { constants } from "fs";
-import { access, readFile } from "fs/promises";
-import { deployAssets } from "./deployAssets";
-import { createS3StorageService } from "./StorageService";
-const exists = (file) => access(file, constants.R_OK)
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = __importDefault(require("@actions/core"));
+const client_s3_1 = require("@aws-sdk/client-s3");
+const fs_1 = require("fs");
+const promises_1 = require("fs/promises");
+const deployAssets_1 = require("./deployAssets");
+const StorageService_1 = require("./StorageService");
+async function main() {
+    const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
+    const s3Client = new client_s3_1.S3Client({
+        region: region,
+        credentials: {
+            accessKeyId,
+            secretAccessKey,
+        },
+    });
+    const storageService = (0, StorageService_1.createS3StorageService)({
+        s3Client,
+        bucket,
+    });
+    const hostingConfig = await readHostingConfig();
+    await (0, deployAssets_1.deployAssets)({ storageService, sourceDir, hostingConfig, maxDays });
+}
+const fileExists = (file) => (0, promises_1.access)(file, fs_1.constants.R_OK)
     .catch(() => false)
     .then(() => true);
-const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
-const hostingFileName = "hosting.json";
-if (!(await exists(hostingFileName))) {
-    throw new Error(`${hostingFileName} must be created`);
+async function readHostingConfig() {
+    const hostingFileName = "hosting.json";
+    if (!(await fileExists(hostingFileName))) {
+        throw new Error(`${hostingFileName} must be created`);
+    }
+    const hostingFileContent = await (0, promises_1.readFile)(hostingFileName);
+    const hostingConfig = JSON.parse(hostingFileContent.toString());
+    return hostingConfig;
 }
-const hostingFileContent = await readFile(hostingFileName);
-const hostingConfig = JSON.parse(hostingFileContent.toString());
-const s3Client = new S3Client({
-    credentials: {
-        accessKeyId,
-        secretAccessKey,
-    },
-    region,
-});
-const storageService = createS3StorageService({ s3Client, bucket });
-await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
 function getActionParams() {
     return {
-        accessKeyId: core.getInput("awsKeyId", {
+        accessKeyId: core_1.default.getInput("access-key-id", {
             required: true,
         }),
-        secretAccessKey: core.getInput("awsSecretAccessKey", {
+        secretAccessKey: core_1.default.getInput("secret-access-key", {
             required: true,
         }),
-        region: core.getInput("region", {
+        region: core_1.default.getInput("region", {
             required: true,
         }),
-        bucket: core.getInput("bucket", {
+        bucket: core_1.default.getInput("bucket", {
             required: true,
         }),
-        sourceDir: core.getInput("sourceDir", {
+        sourceDir: core_1.default.getInput("source-dir", {
             required: true,
         }),
-        maxDays: parseInt(core.getInput("maxDays", {
-            required: true,
+        maxDays: parseInt(core_1.default.getInput("max-days", {
+            required: false,
         })),
     };
 }
+main().catch((error) => {
+    core_1.default.setFailed(error.message);
+});

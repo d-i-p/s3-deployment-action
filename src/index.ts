@@ -5,20 +5,22 @@ import { access, readFile } from "fs/promises";
 import { deployAssets } from "./deployAssets";
 import { createS3StorageService } from "./StorageService";
 
-const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
-const hostingConfig = await readHostingConfig();
-
-const s3Client = new S3Client({
-  credentials: {
-    accessKeyId,
-    secretAccessKey,
-  },
-  region,
-});
-
-const storageService = createS3StorageService({ s3Client, bucket });
-
-await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
+async function main() {
+  const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
+  const s3Client = new S3Client({
+    region: region,
+    credentials: {
+      accessKeyId,
+      secretAccessKey,
+    },
+  });
+  const storageService = createS3StorageService({
+    s3Client,
+    bucket,
+  });
+  const hostingConfig = await readHostingConfig();
+  await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
+}
 
 export type FileConfig = {
   path: string;
@@ -79,3 +81,7 @@ function getActionParams() {
     ),
   };
 }
+
+main().catch((error) => {
+  core.setFailed(error.message);
+});

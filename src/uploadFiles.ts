@@ -28,13 +28,13 @@ export async function uploadFiles({ files, storageService, hostingConfig }: Uplo
 
   const nonEntrypoints = fileInfos.filter(({ isEntrypoint }) => !isEntrypoint).map(({ file }) => file);
   await Promise.all(nonEntrypoints.map(uploadFile));
-  
+
   const entrypoints = fileInfos.filter(({ isEntrypoint }) => isEntrypoint).map(({ file }) => file);
   await Promise.all(entrypoints.map(uploadFile));
 }
 
 function getS3ObjectParams(headers: FileConfig["headers"]) {
-  const standardHeaders = ["cache-control", "access-control-allow-origin"]; // we discard "access-control-allow-origin" completely as it is set through Terraform
+  const standardHeaders = ["cache-control", "access-control-allow-origin"]; // we discard "access-control-allow-origin" as it should be set in Cloudfront
 
   const CacheControl = headers.find((x) => x.key.toLowerCase() === "cache-control")?.value;
 

@@ -25,7 +25,7 @@ export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Clien
     },
     async uploadFile(file: {
       name: string;
-      body: unknown;
+      body: string | Buffer;
       CacheControl?: string;
       Metadata?: {
         [k: string]: string;

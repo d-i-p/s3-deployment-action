@@ -1,21 +1,25 @@
-import { uploadFiles } from "./uploadFiles";
-import { calculateChanges } from "./calculateChanges";
-import { getSourceFiles } from "./getSourceFiles";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deployAssets = void 0;
+const uploadFiles_1 = require("./uploadFiles");
+const calculateChanges_1 = require("./calculateChanges");
+const getSourceFiles_1 = require("./getSourceFiles");
 const deploymentLogFileName = "deployment.json";
-export async function deployAssets({ sourceDir, hostingConfig, storageService, maxDays }) {
-    const files = await getSourceFiles({ sourceDir });
+async function deployAssets({ sourceDir, hostingConfig, storageService, maxDays, }) {
+    const files = await (0, getSourceFiles_1.getSourceFiles)({ sourceDir });
     console.log("Files to upload", files);
-    await uploadFiles({ files, storageService, hostingConfig });
+    await (0, uploadFiles_1.uploadFiles)({ files, storageService, hostingConfig });
     console.log("Getting last deployment log...");
-    const lastDeploymentLog = (await storageService.downloadFile(deploymentLogFileName));
+    const lastDeploymentLogFileContents = await storageService.downloadFileAsString(deploymentLogFileName);
+    const lastDeploymentLog = lastDeploymentLogFileContents !== null ? JSON.parse(lastDeploymentLogFileContents) : null;
     if (lastDeploymentLog) {
         console.log("Last deployment log:", lastDeploymentLog);
     }
     else {
         console.log("Lastdeployment log not found.");
     }
-    const { filesToDelete, newDeploymentLog } = calculateChanges({
-        lastDeploymentLog: lastDeploymentLog ?? [],
+    const { filesToDelete, newDeploymentLog } = (0, calculateChanges_1.calculateChanges)({
+        lastDeploymentLog: lastDeploymentLog !== null && lastDeploymentLog !== void 0 ? lastDeploymentLog : [],
         files,
         maxDays,
     });
@@ -31,3 +35,4 @@ export async function deployAssets({ sourceDir, hostingConfig, storageService, m
         console.log("No expired files to delete");
     }
 }
+exports.deployAssets = deployAssets;
