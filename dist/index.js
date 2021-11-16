@@ -26664,7 +26664,7 @@ async function main4() {
   const hostingConfig = (_a = await readHostingConfig()) != null ? _a : { files: [] };
   await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
 }
-var fileExists = (file) => import_fs8.promises.access(file, import_fs7.constants.R_OK).catch(() => false).then(() => true);
+var fileExists = (file) => import_fs8.promises.access(file, import_fs7.constants.R_OK).then(() => true).catch(() => false);
 async function readHostingConfig() {
   const hostingFileName = "hosting.json";
   if (!await fileExists(hostingFileName)) {

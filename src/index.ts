@@ -42,8 +42,8 @@ export type DeploymentFile = {
 const fileExists = (file: string) =>
   fs
     .access(file, constants.R_OK)
-    .catch(() => false)
-    .then(() => true);
+    .then(() => true)
+    .catch(() => false);
 
 async function readHostingConfig(): Promise<HostingConfig | null> {
   const hostingFileName = "hosting.json";
