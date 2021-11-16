@@ -5,20 +5,8 @@ import { access, readFile } from "fs/promises";
 import { deployAssets } from "./deployAssets";
 import { createS3StorageService } from "./StorageService";
 
-const exists = (file: string) =>
-  access(file, constants.R_OK)
-    .catch(() => false)
-    .then(() => true);
-
 const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
-const hostingFileName = "hosting.json";
-
-if (!(await exists(hostingFileName))) {
-  throw new Error(`${hostingFileName} must be created`);
-}
-
-const hostingFileContent = await readFile(hostingFileName);
-const hostingConfig: HostingConfig = JSON.parse(hostingFileContent.toString());
+const hostingConfig = await readHostingConfig();
 
 const s3Client = new S3Client({
   credentials: {
@@ -45,14 +33,34 @@ export type HostingConfig = {
   files: FileConfig[];
 };
 
-export type DeploymentFile = { path: string; obsoleteSince: string | null };
+export type DeploymentFile = {
+  path: string;
+  obsoleteSince: string | null;
+};
+
+const fileExists = (file: string) =>
+  access(file, constants.R_OK)
+    .catch(() => false)
+    .then(() => true);
+
+async function readHostingConfig(): Promise<HostingConfig> {
+  const hostingFileName = "hosting.json";
+
+  if (!(await fileExists(hostingFileName))) {
+    throw new Error(`${hostingFileName} must be created`);
+  }
+
+  const hostingFileContent = await readFile(hostingFileName);
+  const hostingConfig: HostingConfig = JSON.parse(hostingFileContent.toString());
+  return hostingConfig;
+}
 
 function getActionParams() {
   return {
-    accessKeyId: core.getInput("awsKeyId", {
+    accessKeyId: core.getInput("access-key-id", {
       required: true,
     }),
-    secretAccessKey: core.getInput("awsSecretAccessKey", {
+    secretAccessKey: core.getInput("secret-access-key", {
       required: true,
     }),
     region: core.getInput("region", {
@@ -61,12 +69,12 @@ function getActionParams() {
     bucket: core.getInput("bucket", {
       required: true,
     }),
-    sourceDir: core.getInput("sourceDir", {
+    sourceDir: core.getInput("source-dir", {
       required: true,
     }),
     maxDays: parseInt(
-      core.getInput("maxDays", {
-        required: true,
+      core.getInput("max-days", {
+        required: false,
       })
     ),
   };

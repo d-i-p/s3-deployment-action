@@ -7,6 +7,12 @@ Github action to deploy sites to an S3 bucket.
 ## Example
 
 ```
-jobs:
-  TODO
+uses: @d-i-p/s3-deployment-action@main
+with:
+  bucket: my-bucket
+  region: us-east-1
+  access-key-id: AKIAIOSFODNN7EXAMPLE
+  secret-access-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  source-dir: ./dist
+  max-days: 14
 ```
