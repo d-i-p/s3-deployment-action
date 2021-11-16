@@ -12,7 +12,7 @@ const s3Client = new S3Client({
     accessKeyId,
     secretAccessKey,
   },
-  region: "eu-west-1",
+  region,
 });
 
 const storageService = createS3StorageService({ s3Client, bucket });
