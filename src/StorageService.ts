@@ -46,10 +46,14 @@ export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Clien
 }
 
 async function readableToString(readable: Readable): Promise<string> {
-  const data: string[] = [];
-  for await (const chunk of readable) {
-    data.push(chunk);
-  }
+  return new Promise((resolve, reject) => {
+    let data = "";
 
-  return data.join("");
+    readable.on("data", (chunk) => {
+      data += chunk;
+    });
+
+    readable.on("error", reject);
+    readable.on("end", () => resolve(data));
+  });
 }
