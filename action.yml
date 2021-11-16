@@ -1,0 +1,25 @@
+name: 'S3 deployment'
+description: 'Deploys assets to S3 bucket'
+inputs:
+  awsSecretAccessKey:
+    required: true
+    description: 'AWS Secret Access Key'
+  awsKeyId:
+    required: true
+    description: 'AWS Key ID'
+  bucket:
+    description: 'Destination bucket'
+    required: true
+  region:
+    description: 'AWS region'
+    required: true
+  sourceDir:
+    description: 'Build directory'
+    required: true
+  maxDays:
+    description: 'Maximum number of days to keep an asset after it became unused'
+    required: false
+  idio
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
