@@ -1,11 +1,23 @@
 import core from "@actions/core";
 import { S3Client } from "@aws-sdk/client-s3";
+import { constants } from "fs";
+import { access, readFile } from "fs/promises";
 import { deployAssets } from "./deployAssets";
 import { createS3StorageService } from "./StorageService";
 
-const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
+const exists = (file: string) =>
+  access(file, constants.R_OK)
+    .catch(() => false)
+    .then(() => true);
 
-const hostingConfig: HostingConfig = null as any; // TODO
+const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
+const hostingFileName = "hosting.json";
+if (!(await exists(hostingFileName))) {
+  throw new Error(`${hostingFileName} must be created`);
+}
+
+const hostingFileContent = await readFile(hostingFileName);
+const hostingConfig: HostingConfig = JSON.parse(hostingFileContent.toString());
 
 const s3Client = new S3Client({
   credentials: {

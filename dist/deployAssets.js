@@ -3,16 +3,16 @@ import { calculateChanges } from "./calculateChanges";
 import { getSourceFiles } from "./getSourceFiles";
 const deploymentLogFileName = "deployment.json";
 export async function deployAssets({ sourceDir, hostingConfig, storageService, maxDays }) {
-    const files = await getSourceFiles({ sourceDir: sourceDir });
-    console.debug("files to upload", files);
+    const files = await getSourceFiles({ sourceDir });
+    console.log("Files to upload", files);
     await uploadFiles({ files, storageService, hostingConfig });
-    console.log("Getting previous deployment log...");
+    console.log("Getting last deployment log...");
     const lastDeploymentLog = (await storageService.downloadFile(deploymentLogFileName));
     if (lastDeploymentLog) {
-        console.log("Previous deployment log:", lastDeploymentLog);
+        console.log("Last deployment log:", lastDeploymentLog);
     }
     else {
-        console.log("No previous deployment log found.");
+        console.log("Lastdeployment log not found.");
     }
     const { filesToDelete, newDeploymentLog } = calculateChanges({
         lastDeploymentLog: lastDeploymentLog ?? [],

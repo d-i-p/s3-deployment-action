@@ -14,18 +14,18 @@ type DeployAssetsParams = {
 };
 
 export async function deployAssets({ sourceDir, hostingConfig, storageService, maxDays }: DeployAssetsParams): Promise<void> {
-  const files = await getSourceFiles({ sourceDir: sourceDir });
+  const files = await getSourceFiles({ sourceDir });
 
-  console.debug("files to upload", files);
+  console.log("Files to upload", files);
   await uploadFiles({ files, storageService, hostingConfig });
 
-  console.log("Getting previous deployment log...");
+  console.log("Getting last deployment log...");
   const lastDeploymentLog = (await storageService.downloadFile(deploymentLogFileName)) as DeploymentFile[] | null;
 
   if (lastDeploymentLog) {
-    console.log("Previous deployment log:", lastDeploymentLog);
+    console.log("Last deployment log:", lastDeploymentLog);
   } else {
-    console.log("No previous deployment log found.");
+    console.log("Lastdeployment log not found.");
   }
 
   const { filesToDelete, newDeploymentLog } = calculateChanges({

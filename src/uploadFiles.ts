@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import { FileConfig, HostingConfig } from "./index";
 import { StorageService } from "./StorageService";
@@ -21,7 +21,7 @@ export async function uploadFiles({ files, storageService, hostingConfig }: Uplo
     const fileConfig = hostingConfig.files.find((x) => x.path === file);
     await storageService.uploadFile({
       name: file,
-      body: fs.readFileSync(file),
+      body: await fs.readFile(file),
       ...(fileConfig ? getS3ObjectParams(fileConfig.headers) : {}),
     });
   }

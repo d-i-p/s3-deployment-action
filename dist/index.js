@@ -1,15 +1,25 @@
 import core from "@actions/core";
 import { S3Client } from "@aws-sdk/client-s3";
+import { constants } from "fs";
+import { access, readFile } from "fs/promises";
 import { deployAssets } from "./deployAssets";
 import { createS3StorageService } from "./StorageService";
-const { accessKeyId, secretAccessKey, sourceDir, bucket, maxDays } = getActionParams();
-const hostingConfig = null; // TODO
+const exists = (file) => access(file, constants.R_OK)
+    .catch(() => false)
+    .then(() => true);
+const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
+const hostingFileName = "hosting.json";
+if (!(await exists(hostingFileName))) {
+    throw new Error(`${hostingFileName} must be created`);
+}
+const hostingFileContent = await readFile(hostingFileName);
+const hostingConfig = JSON.parse(hostingFileContent.toString());
 const s3Client = new S3Client({
     credentials: {
         accessKeyId,
         secretAccessKey,
     },
-    region: "eu-west-1",
+    region,
 });
 const storageService = createS3StorageService({ s3Client, bucket });
 await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
@@ -19,6 +29,9 @@ function getActionParams() {
             required: true,
         }),
         secretAccessKey: core.getInput("awsSecretAccessKey", {
+            required: true,
+        }),
+        region: core.getInput("region", {
             required: true,
         }),
         bucket: core.getInput("bucket", {

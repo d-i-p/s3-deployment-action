@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 export const entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
 export async function uploadFiles({ files, storageService, hostingConfig }) {
@@ -10,7 +10,7 @@ export async function uploadFiles({ files, storageService, hostingConfig }) {
         const fileConfig = hostingConfig.files.find((x) => x.path === file);
         await storageService.uploadFile({
             name: file,
-            body: fs.readFileSync(file),
+            body: await fs.readFile(file),
             ...(fileConfig ? getS3ObjectParams(fileConfig.headers) : {}),
         });
     }
