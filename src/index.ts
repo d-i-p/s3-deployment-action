@@ -12,6 +12,7 @@ const exists = (file: string) =>
 
 const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
 const hostingFileName = "hosting.json";
+
 if (!(await exists(hostingFileName))) {
   throw new Error(`${hostingFileName} must be created`);
 }

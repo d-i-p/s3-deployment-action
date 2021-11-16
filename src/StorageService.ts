@@ -6,15 +6,14 @@ export type StorageService = ReturnType<typeof createS3StorageService>;
 
 export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Client; bucket: string }) {
   return {
-    async downloadFile(name: string): Promise<unknown | null> {
+    async downloadFileAsString(name: string): Promise<string | null> {
       const result = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: name }));
 
-      if (!result.Body) {
+      if (result.Body == null) {
         return null;
       }
 
-      const json = await readableToString(result.Body as Readable);
-      return JSON.parse(json);
+      return await readableToString(result.Body as Readable);
     },
     async deleteFiles(names: string[]): Promise<void> {
       await s3Client.send(

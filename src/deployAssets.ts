@@ -13,14 +13,21 @@ type DeployAssetsParams = {
   maxDays: number;
 };
 
-export async function deployAssets({ sourceDir, hostingConfig, storageService, maxDays }: DeployAssetsParams): Promise<void> {
+export async function deployAssets({
+  sourceDir,
+  hostingConfig,
+  storageService,
+  maxDays,
+}: DeployAssetsParams): Promise<void> {
   const files = await getSourceFiles({ sourceDir });
 
   console.log("Files to upload", files);
   await uploadFiles({ files, storageService, hostingConfig });
 
   console.log("Getting last deployment log...");
-  const lastDeploymentLog = (await storageService.downloadFile(deploymentLogFileName)) as DeploymentFile[] | null;
+  const lastDeploymentLogFileContents = await storageService.downloadFileAsString(deploymentLogFileName);
+  const lastDeploymentLog =
+    lastDeploymentLogFileContents !== null ? (JSON.parse(lastDeploymentLogFileContents) as DeploymentFile[]) : null;
 
   if (lastDeploymentLog) {
     console.log("Last deployment log:", lastDeploymentLog);
