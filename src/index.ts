@@ -18,7 +18,7 @@ async function main() {
     s3Client,
     bucket,
   });
-  const hostingConfig = await readHostingConfig();
+  const hostingConfig = (await readHostingConfig()) ?? { files: [] };
   await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
 }
 
@@ -31,7 +31,6 @@ export type FileConfig = {
 };
 
 export type HostingConfig = {
-  sourceDirectory: string;
   files: FileConfig[];
 };
 
@@ -41,15 +40,16 @@ export type DeploymentFile = {
 };
 
 const fileExists = (file: string) =>
-  fs.access(file, constants.R_OK)
+  fs
+    .access(file, constants.R_OK)
     .catch(() => false)
     .then(() => true);
 
-async function readHostingConfig(): Promise<HostingConfig> {
+async function readHostingConfig(): Promise<HostingConfig | null> {
   const hostingFileName = "hosting.json";
 
   if (!(await fileExists(hostingFileName))) {
-    throw new Error(`${hostingFileName} must be created`);
+    return null;
   }
 
   const hostingFileContent = await fs.readFile(hostingFileName);

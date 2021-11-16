@@ -26648,6 +26648,7 @@ async function readableToString(readable) {
 
 // src/index.ts
 async function main4() {
+  var _a;
   const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
   const s3Client = new S3Client({
     region,
@@ -26660,14 +26661,14 @@ async function main4() {
     s3Client,
     bucket
   });
-  const hostingConfig = await readHostingConfig();
+  const hostingConfig = (_a = await readHostingConfig()) != null ? _a : { files: [] };
   await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
 }
 var fileExists = (file) => import_fs8.promises.access(file, import_fs7.constants.R_OK).catch(() => false).then(() => true);
 async function readHostingConfig() {
   const hostingFileName = "hosting.json";
   if (!await fileExists(hostingFileName)) {
-    throw new Error(`${hostingFileName} must be created`);
+    return null;
   }
   const hostingFileContent = await import_fs8.promises.readFile(hostingFileName);
   const hostingConfig = JSON.parse(hostingFileContent.toString());
