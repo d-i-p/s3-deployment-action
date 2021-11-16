@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "dist": "esbuild src/index.ts --outdir=dist --bundle --tsconfig=tsconfig.json --platform=node --target=node12 --main-fields=module,main",
+    "dist": "esbuild src/index.ts --outfile=dist/index.js --bundle --tsconfig=tsconfig.json --platform=node --target=node12 --main-fields=module,main",
     "test": "jest src",
     "start": "node dist/index.js"
   },

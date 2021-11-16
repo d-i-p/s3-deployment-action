@@ -1,7 +1,7 @@
 import core from "@actions/core";
 import { S3Client } from "@aws-sdk/client-s3";
 import { constants } from "fs";
-import { access, readFile } from "fs/promises";
+import { promises as fs } from "fs";
 import { deployAssets } from "./deployAssets";
 import { createS3StorageService } from "./StorageService";
 
@@ -41,7 +41,7 @@ export type DeploymentFile = {
 };
 
 const fileExists = (file: string) =>
-  access(file, constants.R_OK)
+  fs.access(file, constants.R_OK)
     .catch(() => false)
     .then(() => true);
 
@@ -52,7 +52,7 @@ async function readHostingConfig(): Promise<HostingConfig> {
     throw new Error(`${hostingFileName} must be created`);
   }
 
-  const hostingFileContent = await readFile(hostingFileName);
+  const hostingFileContent = await fs.readFile(hostingFileName);
   const hostingConfig: HostingConfig = JSON.parse(hostingFileContent.toString());
   return hostingConfig;
 }

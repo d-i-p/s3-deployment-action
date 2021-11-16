@@ -198,7 +198,7 @@ var require_file_command = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.issueCommand = void 0;
-    var fs2 = __importStar2(require("fs"));
+    var fs3 = __importStar2(require("fs"));
     var os = __importStar2(require("os"));
     var utils_1 = require_utils();
     function issueCommand(command, message) {
@@ -206,10 +206,10 @@ var require_file_command = __commonJS({
       if (!filePath) {
         throw new Error(`Unable to find environment variable for file command ${command}`);
       }
-      if (!fs2.existsSync(filePath)) {
+      if (!fs3.existsSync(filePath)) {
         throw new Error(`Missing file at path: ${filePath}`);
       }
-      fs2.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os.EOL}`, {
+      fs3.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os.EOL}`, {
         encoding: "utf8"
       });
     }
@@ -6091,7 +6091,7 @@ var require_internal_globber = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultGlobber = void 0;
     var core2 = __importStar2(require_core());
-    var fs2 = __importStar2(require("fs"));
+    var fs3 = __importStar2(require("fs"));
     var globOptionsHelper = __importStar2(require_internal_glob_options_helper());
     var path3 = __importStar2(require("path"));
     var patternHelper = __importStar2(require_internal_pattern_helper());
@@ -6145,7 +6145,7 @@ var require_internal_globber = __commonJS({
           for (const searchPath of patternHelper.getSearchPaths(patterns)) {
             core2.debug(`Search path '${searchPath}'`);
             try {
-              yield __await2(fs2.promises.lstat(searchPath));
+              yield __await2(fs3.promises.lstat(searchPath));
             } catch (err) {
               if (err.code === "ENOENT") {
                 continue;
@@ -6173,7 +6173,7 @@ var require_internal_globber = __commonJS({
                 continue;
               }
               const childLevel = item.level + 1;
-              const childItems = (yield __await2(fs2.promises.readdir(item.path))).map((x) => new internal_search_state_1.SearchState(path3.join(item.path, x), childLevel));
+              const childItems = (yield __await2(fs3.promises.readdir(item.path))).map((x) => new internal_search_state_1.SearchState(path3.join(item.path, x), childLevel));
               stack.push(...childItems.reverse());
             } else if (match & internal_match_kind_1.MatchKind.File) {
               yield yield __await2(item.path);
@@ -6205,7 +6205,7 @@ var require_internal_globber = __commonJS({
           let stats;
           if (options.followSymbolicLinks) {
             try {
-              stats = yield fs2.promises.stat(item.path);
+              stats = yield fs3.promises.stat(item.path);
             } catch (err) {
               if (err.code === "ENOENT") {
                 if (options.omitBrokenSymbolicLinks) {
@@ -6217,10 +6217,10 @@ var require_internal_globber = __commonJS({
               throw err;
             }
           } else {
-            stats = yield fs2.promises.lstat(item.path);
+            stats = yield fs3.promises.lstat(item.path);
           }
           if (stats.isDirectory() && options.followSymbolicLinks) {
-            const realPath = yield fs2.promises.realpath(item.path);
+            const realPath = yield fs3.promises.realpath(item.path);
             while (traversalChain.length >= item.level) {
               traversalChain.pop();
             }
@@ -6321,7 +6321,7 @@ var require_internal_hash_files = __commonJS({
     exports.hashFiles = void 0;
     var crypto = __importStar2(require("crypto"));
     var core2 = __importStar2(require_core());
-    var fs2 = __importStar2(require("fs"));
+    var fs3 = __importStar2(require("fs"));
     var stream = __importStar2(require("stream"));
     var util = __importStar2(require("util"));
     var path3 = __importStar2(require("path"));
@@ -6341,13 +6341,13 @@ var require_internal_hash_files = __commonJS({
               core2.debug(`Ignore '${file}' since it is not under GITHUB_WORKSPACE.`);
               continue;
             }
-            if (fs2.statSync(file).isDirectory()) {
+            if (fs3.statSync(file).isDirectory()) {
               core2.debug(`Skip directory '${file}'.`);
               continue;
             }
             const hash = crypto.createHash("sha256");
             const pipeline = util.promisify(stream.pipeline);
-            yield pipeline(fs2.createReadStream(file), hash);
+            yield pipeline(fs3.createReadStream(file), hash);
             result.write(hash.digest());
             count++;
             if (!hasMatch) {
@@ -26452,11 +26452,11 @@ var S3Client = function(_super) {
 }(Client);
 
 // src/index.ts
-var import_fs6 = __toModule(require("fs"));
-var import_promises2 = __toModule(require("fs/promises"));
+var import_fs7 = __toModule(require("fs"));
+var import_fs8 = __toModule(require("fs"));
 
 // src/uploadFiles.ts
-var import_promises = __toModule(require("fs/promises"));
+var import_fs6 = __toModule(require("fs"));
 var import_path3 = __toModule(require("path"));
 var entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
 async function uploadFiles({ files: files4, storageService, hostingConfig }) {
@@ -26468,7 +26468,7 @@ async function uploadFiles({ files: files4, storageService, hostingConfig }) {
     const fileConfig = hostingConfig.files.find((x) => x.path === file);
     await storageService.uploadFile(__spreadValues({
       name: file,
-      body: await import_promises.default.readFile(file)
+      body: await import_fs6.promises.readFile(file)
     }, fileConfig ? getS3ObjectParams(fileConfig.headers) : {}));
   }
   const nonEntrypoints = fileInfos.filter(({ isEntrypoint }) => !isEntrypoint).map(({ file }) => file);
@@ -26663,13 +26663,13 @@ async function main4() {
   const hostingConfig = await readHostingConfig();
   await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
 }
-var fileExists = (file) => (0, import_promises2.access)(file, import_fs6.constants.R_OK).catch(() => false).then(() => true);
+var fileExists = (file) => import_fs8.promises.access(file, import_fs7.constants.R_OK).catch(() => false).then(() => true);
 async function readHostingConfig() {
   const hostingFileName = "hosting.json";
   if (!await fileExists(hostingFileName)) {
     throw new Error(`${hostingFileName} must be created`);
   }
-  const hostingFileContent = await (0, import_promises2.readFile)(hostingFileName);
+  const hostingFileContent = await import_fs8.promises.readFile(hostingFileName);
   const hostingConfig = JSON.parse(hostingFileContent.toString());
   return hostingConfig;
 }

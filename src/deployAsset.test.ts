@@ -2,7 +2,7 @@ import { HostingConfig } from "./index";
 import { deployAssets } from "./deployAssets";
 import { StorageService } from "./StorageService";
 import * as getSourceFilesModule from "./getSourceFiles";
-import fs from "fs/promises";
+import { promises as fs } from "fs";
 
 describe(deployAssets, () => {
   const hostingConfig: HostingConfig = {
