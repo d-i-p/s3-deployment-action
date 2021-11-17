@@ -31,6 +31,7 @@ export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Clien
         [k: string]: string;
       };
     }): Promise<void> {
+      console.log(`Uploading file '${file}'...`);
       await s3Client.send(
         new PutObjectCommand({
           Bucket: bucket,
@@ -41,6 +42,7 @@ export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Clien
           Metadata: file.Metadata,
         })
       );
+      console.log(`Uploading file '${file}' completed`);
     },
   };
 }

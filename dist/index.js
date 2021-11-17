@@ -26623,6 +26623,7 @@ function createS3StorageService({ s3Client, bucket }) {
       }));
     },
     async uploadFile(file) {
+      console.log(`Uploading file '${file}'...`);
       await s3Client.send(new PutObjectCommand({
         Bucket: bucket,
         Key: file.key,
@@ -26631,6 +26632,7 @@ function createS3StorageService({ s3Client, bucket }) {
         CacheControl: file.CacheControl,
         Metadata: file.Metadata
       }));
+      console.log(`Uploading file '${file}' completed`);
     }
   };
 }
