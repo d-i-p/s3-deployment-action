@@ -26698,6 +26698,7 @@ function getActionParams() {
   };
 }
 main4().catch((error) => {
+  console.error(error);
   import_core.default.setFailed(error.message);
 });
 /*!
