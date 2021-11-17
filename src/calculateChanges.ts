@@ -1,5 +1,5 @@
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
-import { DeploymentFile } from "./index";
+import { DeploymentFile } from "./action";
 
 export function calculateChanges({
   lastDeploymentLog,

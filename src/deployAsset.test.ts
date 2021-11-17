@@ -1,10 +1,10 @@
-import { HostingConfig } from "./index";
 import { deployAssets } from "./deployAssets";
 import { StorageService } from "./StorageService";
 import * as getSourceFilesModule from "./getSourceFiles";
 import { promises as fs } from "fs";
 import temp from "temp";
 import path from "path";
+import { HostingConfig } from "./action";
 
 const trackingTemp = temp.track();
 

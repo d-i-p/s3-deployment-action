@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { FileConfig, HostingConfig } from "./index";
+import { FileConfig, HostingConfig } from "./action";
 import { StorageService } from "./StorageService";
 
 export const entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];

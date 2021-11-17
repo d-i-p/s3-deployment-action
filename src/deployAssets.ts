@@ -2,7 +2,7 @@ import { uploadFiles } from "./uploadFiles";
 import { calculateChanges } from "./calculateChanges";
 import { getSourceFiles } from "./getSourceFiles";
 import { StorageService } from "./StorageService";
-import { DeploymentFile } from "./index";
+import { DeploymentFile } from "./action";
 
 const deploymentLogFileName = "deployment.json";
 

@@ -15010,7 +15010,9 @@ var require_mime_types = __commonJS({
 });
 
 // src/index.ts
-__markAsModule(exports);
+__export(exports, {
+  getActionParams: () => getActionParams
+});
 var import_core = __toModule(require_core());
 
 // node_modules/tslib/modules/index.js
@@ -26451,10 +26453,6 @@ var S3Client = function(_super) {
   return S3Client3;
 }(Client);
 
-// src/index.ts
-var import_fs7 = __toModule(require("fs"));
-var import_fs8 = __toModule(require("fs"));
-
 // src/uploadFiles.ts
 var import_fs6 = __toModule(require("fs"));
 var import_path3 = __toModule(require("path"));
@@ -26623,7 +26621,7 @@ function createS3StorageService({ s3Client, bucket }) {
       }));
     },
     async uploadFile(file) {
-      console.log(`Uploading file '${file}'...`);
+      console.log(`Uploading file '${file.key}'...`);
       await s3Client.send(new PutObjectCommand({
         Bucket: bucket,
         Key: file.key,
@@ -26632,7 +26630,7 @@ function createS3StorageService({ s3Client, bucket }) {
         CacheControl: file.CacheControl,
         Metadata: file.Metadata
       }));
-      console.log(`Uploading file '${file}' completed`);
+      console.log(`Uploading file '${file.key}' completed`);
     }
   };
 }
@@ -26647,17 +26645,12 @@ async function readableToString(readable) {
   });
 }
 
-// src/index.ts
-async function main4() {
+// src/action.ts
+var import_fs7 = __toModule(require("fs"));
+var import_fs8 = __toModule(require("fs"));
+async function action({ sourceDir, bucket, maxDays }) {
   var _a;
-  const { accessKeyId, secretAccessKey, sourceDir, bucket, region, maxDays } = getActionParams();
-  const s3Client = new S3Client({
-    region,
-    credentials: {
-      accessKeyId,
-      secretAccessKey
-    }
-  });
+  const s3Client = new S3Client({});
   const storageService = createS3StorageService({
     s3Client,
     bucket
@@ -26675,17 +26668,10 @@ async function readHostingConfig() {
   const hostingConfig = JSON.parse(hostingFileContent.toString());
   return hostingConfig;
 }
+
+// src/index.ts
 function getActionParams() {
   return {
-    accessKeyId: import_core.default.getInput("access-key-id", {
-      required: true
-    }),
-    secretAccessKey: import_core.default.getInput("secret-access-key", {
-      required: true
-    }),
-    region: import_core.default.getInput("region", {
-      required: true
-    }),
     bucket: import_core.default.getInput("bucket", {
       required: true
     }),
@@ -26697,9 +26683,13 @@ function getActionParams() {
     }))
   };
 }
-main4().catch((error) => {
+action(getActionParams()).catch((error) => {
   console.error(error);
   import_core.default.setFailed(error.message);
+});
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  getActionParams
 });
 /*!
  * mime-db

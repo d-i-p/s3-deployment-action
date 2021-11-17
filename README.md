@@ -10,9 +10,10 @@ Github action to deploy sites to an S3 bucket.
 uses: @d-i-p/s3-deployment-action@main
 with:
   bucket: my-bucket
-  region: us-east-1
-  access-key-id: AKIAIOSFODNN7EXAMPLE
-  secret-access-key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
   source-dir: ./dist
   max-days: 14
+env:
+  AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+  AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  AWS_REGION=us-west-2
 ```

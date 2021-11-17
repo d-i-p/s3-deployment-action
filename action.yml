@@ -1,17 +1,8 @@
 name: 'S3 deployment'
 description: 'Deploys assets to S3 bucket'
 inputs:
-  secret-access-key:
-    description: 'AWS Secret Access Key'
-    required: true
-  access-key-id:
-    description: 'AWS Key ID'
-    required: true
   bucket:
     description: 'Destination bucket'
-    required: true
-  region:
-    description: 'AWS region'
     required: true
   source-dir:
     description: 'Dist directory'
