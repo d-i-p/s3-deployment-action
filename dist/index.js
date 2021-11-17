@@ -6414,19 +6414,19 @@ var require_glob = __commonJS({
     exports.hashFiles = exports.create = void 0;
     var internal_globber_1 = require_internal_globber();
     var internal_hash_files_1 = require_internal_hash_files();
-    function create(patterns, options) {
+    function create2(patterns, options) {
       return __awaiter2(this, void 0, void 0, function* () {
         return yield internal_globber_1.DefaultGlobber.create(patterns, options);
       });
     }
-    exports.create = create;
+    exports.create = create2;
     function hashFiles(patterns, options) {
       return __awaiter2(this, void 0, void 0, function* () {
         let followSymbolicLinks = true;
         if (options && typeof options.followSymbolicLinks === "boolean") {
           followSymbolicLinks = options.followSymbolicLinks;
         }
-        const globber = yield create(patterns, { followSymbolicLinks });
+        const globber = yield create2(patterns, { followSymbolicLinks });
         return internal_hash_files_1.hashFiles(globber);
       });
     }
@@ -26459,15 +26459,16 @@ var import_fs8 = __toModule(require("fs"));
 var import_fs6 = __toModule(require("fs"));
 var import_path3 = __toModule(require("path"));
 var entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
-async function uploadFiles({ files: files4, storageService, hostingConfig }) {
+async function uploadFiles({ files: files4, sourceDir, storageService, hostingConfig }) {
   const fileInfos = files4.map((file) => ({
     isEntrypoint: entryPointFileNames.includes(import_path3.default.basename(file)),
     file
   }));
   async function uploadFile(file) {
-    const fileConfig = hostingConfig.files.find((x) => x.path === file);
+    const key = import_path3.default.relative(sourceDir, file);
+    const fileConfig = hostingConfig.files.find((x) => x.path === key);
     await storageService.uploadFile(__spreadValues({
-      name: file,
+      key,
       body: await import_fs6.promises.readFile(file)
     }, fileConfig ? getS3ObjectParams(fileConfig.headers) : {}));
   }
@@ -26545,7 +26546,6 @@ function calculateChanges({
 }) {
   const now = Date.now();
   const isExpiredFile = ({ obsoleteSince }) => obsoleteSince !== null && differenceInCalendarDays(now, new Date(obsoleteSince)) > maxDays;
-  console.log({ lastDeploymentLog });
   const filesToDelete = lastDeploymentLog.filter(isExpiredFile).map(({ path: path3 }) => path3);
   const newDeploymentLogMap = new Map();
   lastDeploymentLog.filter((x) => !isExpiredFile(x)).forEach(({ path: path3, obsoleteSince }) => newDeploymentLogMap.set(path3, obsoleteSince != null ? obsoleteSince : new Date(now).toISOString()));
@@ -26560,14 +26560,13 @@ function calculateChanges({
 }
 
 // src/getSourceFiles.ts
-var import_glob = __toModule(require_glob());
+var glob = __toModule(require_glob());
 var import_path4 = __toModule(require("path"));
 async function getSourceFiles({ sourceDir }) {
-  const globber = await import_glob.default.create(import_path4.default.join(sourceDir, "**"), {
+  const globber = await glob.create(import_path4.default.join(sourceDir, "**"), {
     matchDirectories: false
   });
-  const files4 = (await globber.glob()).map((x) => import_path4.default.relative(sourceDir, x));
-  return files4;
+  return await globber.glob();
 }
 
 // src/deployAssets.ts
@@ -26580,7 +26579,7 @@ async function deployAssets({
 }) {
   const files4 = await getSourceFiles({ sourceDir });
   console.log("Files to upload", files4);
-  await uploadFiles({ files: files4, storageService, hostingConfig });
+  await uploadFiles({ files: files4, sourceDir, storageService, hostingConfig });
   console.log("Getting last deployment log...");
   const lastDeploymentLogFileContents = await storageService.downloadFileAsString(deploymentLogFileName);
   const lastDeploymentLog = lastDeploymentLogFileContents !== null ? JSON.parse(lastDeploymentLogFileContents) : null;
@@ -26595,7 +26594,7 @@ async function deployAssets({
     maxDays
   });
   console.log("Uploading new deployment log...", newDeploymentLog);
-  await storageService.uploadFile({ name: deploymentLogFileName, body: JSON.stringify(newDeploymentLog) });
+  await storageService.uploadFile({ key: deploymentLogFileName, body: JSON.stringify(newDeploymentLog) });
   console.log("New deployment log was uploaded", newDeploymentLog);
   if (filesToDelete.length > 0) {
     console.log(`Deleting ${filesToDelete.length} expired files...`);
@@ -26610,24 +26609,24 @@ async function deployAssets({
 var import_mime_types = __toModule(require_mime_types());
 function createS3StorageService({ s3Client, bucket }) {
   return {
-    async downloadFileAsString(name4) {
-      const result = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: name4 }));
+    async downloadFileAsString(key) {
+      const result = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
       if (result.Body == null) {
         return null;
       }
       return await readableToString(result.Body);
     },
-    async deleteFiles(names) {
+    async deleteFiles(keys) {
       await s3Client.send(new DeleteObjectsCommand({
         Bucket: bucket,
-        Delete: { Objects: names.map((Key) => ({ Key })) }
+        Delete: { Objects: keys.map((Key) => ({ Key })) }
       }));
     },
     async uploadFile(file) {
       await s3Client.send(new PutObjectCommand({
         Bucket: bucket,
-        Key: file.name,
-        ContentType: (0, import_mime_types.lookup)(file.name) || "text/plain",
+        Key: file.key,
+        ContentType: (0, import_mime_types.lookup)(file.key) || "text/plain",
         Body: file.body,
         CacheControl: file.CacheControl,
         Metadata: file.Metadata
