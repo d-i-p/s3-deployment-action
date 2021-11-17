@@ -6,21 +6,29 @@ import { StorageService } from "./StorageService";
 export const entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
 
 type UploadFilesParams = {
+  /**
+   * Paths, relative to the project, NOT the folder being deployed.
+   */
   files: string[];
+  /**
+   * Path to the folder being deployed.
+   */
+  sourceDir: string;
   storageService: StorageService;
   hostingConfig: HostingConfig;
 };
 
-export async function uploadFiles({ files, storageService, hostingConfig }: UploadFilesParams) {
+export async function uploadFiles({ files, sourceDir, storageService, hostingConfig }: UploadFilesParams) {
   const fileInfos = files.map((file) => ({
     isEntrypoint: entryPointFileNames.includes(path.basename(file)),
     file,
   }));
 
   async function uploadFile(file: string) {
-    const fileConfig = hostingConfig.files.find((x) => x.path === file);
+    const key = path.relative(sourceDir, file);
+    const fileConfig = hostingConfig.files.find((x) => x.path === key);
     await storageService.uploadFile({
-      name: file,
+      key,
       body: await fs.readFile(file),
       ...(fileConfig ? getS3ObjectParams(fileConfig.headers) : {}),
     });

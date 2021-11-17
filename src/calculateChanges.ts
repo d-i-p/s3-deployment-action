@@ -14,7 +14,6 @@ export function calculateChanges({
   const isExpiredFile = ({ obsoleteSince }: DeploymentFile) =>
     obsoleteSince !== null && differenceInCalendarDays(now, new Date(obsoleteSince)) > maxDays;
 
-  console.log({ lastDeploymentLog });
   const filesToDelete = lastDeploymentLog.filter(isExpiredFile).map(({ path }) => path);
 
   const newDeploymentLogMap = new Map<string, string | null>();

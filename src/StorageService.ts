@@ -6,8 +6,8 @@ export type StorageService = ReturnType<typeof createS3StorageService>;
 
 export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Client; bucket: string }) {
   return {
-    async downloadFileAsString(name: string): Promise<string | null> {
-      const result = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: name }));
+    async downloadFileAsString(key: string): Promise<string | null> {
+      const result = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
 
       if (result.Body == null) {
         return null;
@@ -15,16 +15,16 @@ export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Clien
 
       return await readableToString(result.Body as Readable);
     },
-    async deleteFiles(names: string[]): Promise<void> {
+    async deleteFiles(keys: string[]): Promise<void> {
       await s3Client.send(
         new DeleteObjectsCommand({
           Bucket: bucket,
-          Delete: { Objects: names.map((Key) => ({ Key })) },
+          Delete: { Objects: keys.map((Key) => ({ Key })) },
         })
       );
     },
     async uploadFile(file: {
-      name: string;
+      key: string;
       body: string | Buffer;
       CacheControl?: string;
       Metadata?: {
@@ -34,8 +34,8 @@ export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Clien
       await s3Client.send(
         new PutObjectCommand({
           Bucket: bucket,
-          Key: file.name,
-          ContentType: lookup(file.name) || "text/plain",
+          Key: file.key,
+          ContentType: lookup(file.key) || "text/plain",
           Body: file.body,
           CacheControl: file.CacheControl,
           Metadata: file.Metadata,

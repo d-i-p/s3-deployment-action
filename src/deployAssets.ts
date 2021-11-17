@@ -22,7 +22,7 @@ export async function deployAssets({
   const files = await getSourceFiles({ sourceDir });
 
   console.log("Files to upload", files);
-  await uploadFiles({ files, storageService, hostingConfig });
+  await uploadFiles({ files, sourceDir, storageService, hostingConfig });
 
   console.log("Getting last deployment log...");
   const lastDeploymentLogFileContents = await storageService.downloadFileAsString(deploymentLogFileName);
@@ -42,7 +42,7 @@ export async function deployAssets({
   });
 
   console.log("Uploading new deployment log...", newDeploymentLog);
-  await storageService.uploadFile({ name: deploymentLogFileName, body: JSON.stringify(newDeploymentLog) });
+  await storageService.uploadFile({ key: deploymentLogFileName, body: JSON.stringify(newDeploymentLog) });
   console.log("New deployment log was uploaded", newDeploymentLog);
 
   if (filesToDelete.length > 0) {

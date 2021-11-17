@@ -3,6 +3,10 @@ import { deployAssets } from "./deployAssets";
 import { StorageService } from "./StorageService";
 import * as getSourceFilesModule from "./getSourceFiles";
 import { promises as fs } from "fs";
+import temp from "temp";
+import path from "path";
+
+const trackingTemp = temp.track();
 
 describe(deployAssets, () => {
   const hostingConfig: HostingConfig = {
@@ -21,35 +25,43 @@ describe(deployAssets, () => {
         ],
       },
     ],
-    sourceDirectory: "./build",
   };
 
-  const storage = new Map<string, StoredFile>();
-  const storageService: StorageService = {
-    deleteFiles: jest.fn(async (names: string[]) => names.forEach((name) => storage.delete(name))),
-    downloadFileAsString: jest.fn(async (name: string) => (storage.get(name)?.body as string) ?? null),
-    uploadFile: jest.fn(async (file: StoredFile) => {
-      storage.set(file.name, file);
-    }),
-  };
+  function createFakeStorageService(): StorageService {
+    const storage = new Map<string, StoredFile>();
+    return {
+      deleteFiles: jest.fn(async (keys: string[]) => keys.forEach((key) => storage.delete(key))),
+      downloadFileAsString: jest.fn(async (key: string) => (storage.get(key)?.body as string) ?? null),
+      uploadFile: jest.fn(async (file: StoredFile) => {
+        storage.set(file.key, file);
+      }),
+    };
+  }
 
-  beforeEach(() => {
-    storage.clear();
+  afterEach(() => {
+    trackingTemp.cleanupSync();
   });
 
   it("should deploy the assets", async () => {
+    const storageService = createFakeStorageService();
     jest.spyOn(fs, "readFile").mockResolvedValue("file content");
 
-    jest
-      .spyOn(getSourceFilesModule, "getSourceFiles")
-      .mockResolvedValue(["index.html", "manifest.json", "images/cat.png", "images/dog.png"]);
-
-    await deployAssets({ maxDays: 6, hostingConfig, sourceDir: "./not-a-real-path", storageService });
+    const sourceDir = trackingTemp.mkdirSync();
+    await Promise.all(
+      ["index.html", "manifest.json", "images/cat.png", "images/dog.png"].map(async (file) => {
+        const fullPath = path.join(sourceDir, file);
+        await fs.mkdir(path.dirname(fullPath), { recursive: true });
+        await fs.writeFile(fullPath, "dummy content");
+      })
+    );
+    await deployAssets({ maxDays: 6, hostingConfig, sourceDir, storageService });
 
     expect(storageService.uploadFile).toHaveBeenCalledTimes(5); // 4 assets + deployment.json
   });
 
   it("should deploy the assets", async () => {
+    const storageService = createFakeStorageService();
+
     jest.spyOn(fs, "readFile").mockResolvedValue("file content");
 
     jest
@@ -75,7 +87,7 @@ describe(deployAssets, () => {
 });
 
 type StoredFile = {
-  name: string;
+  key: string;
   body: unknown;
   CacheControl?: string | undefined;
   Metadata?: { [k: string]: string } | undefined;
