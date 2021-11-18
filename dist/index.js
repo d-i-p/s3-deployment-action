@@ -26591,9 +26591,8 @@ async function deployAssets({
     files: files4,
     maxDays
   });
-  console.log("Uploading new deployment log...", newDeploymentLog);
+  console.log("Created new deployment log", newDeploymentLog);
   await storageService.uploadFile({ key: deploymentLogFileName, body: JSON.stringify(newDeploymentLog) });
-  console.log("New deployment log was uploaded", newDeploymentLog);
   if (filesToDelete.length > 0) {
     console.log(`Deleting ${filesToDelete.length} expired files...`);
     await storageService.deleteFiles(filesToDelete);
