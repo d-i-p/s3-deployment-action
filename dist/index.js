@@ -26608,11 +26608,15 @@ var import_mime_types = __toModule(require_mime_types());
 function createS3StorageService({ s3Client, bucket }) {
   return {
     async downloadFileAsString(key) {
-      const result = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
-      if (result.Body == null) {
-        return null;
+      try {
+        const response = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
+        return await readableToString(response.Body);
+      } catch (error) {
+        if (error.code === "NoSuchKey") {
+          return null;
+        }
+        throw error;
       }
-      return await readableToString(result.Body);
     },
     async deleteFiles(keys) {
       await s3Client.send(new DeleteObjectsCommand({

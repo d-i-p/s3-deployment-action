@@ -7,13 +7,16 @@ export type StorageService = ReturnType<typeof createS3StorageService>;
 export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Client; bucket: string }) {
   return {
     async downloadFileAsString(key: string): Promise<string | null> {
-      const result = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
+      try {
+        const response = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
+        return await readableToString(response.Body as Readable);
+      } catch (error: any) {
+        if (error.code === "NoSuchKey") {
+          return null;
+        }
 
-      if (result.Body == null) {
-        return null;
+        throw error;
       }
-
-      return await readableToString(result.Body as Readable);
     },
     async deleteFiles(keys: string[]): Promise<void> {
       await s3Client.send(
