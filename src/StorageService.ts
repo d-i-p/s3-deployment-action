@@ -10,8 +10,8 @@ export function createS3StorageService({ s3Client, bucket }: { s3Client: S3Clien
       try {
         const response = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
         return await readableToString(response.Body as Readable);
-      } catch (error: any) {
-        if (error.code === "NoSuchKey") {
+      } catch (error: unknown) {
+        if (error instanceof Error && error.name === "NoSuchKey") {
           return null;
         }
 

@@ -26612,7 +26612,7 @@ function createS3StorageService({ s3Client, bucket }) {
         const response = await s3Client.send(new GetObjectCommand({ Bucket: bucket, Key: key }));
         return await readableToString(response.Body);
       } catch (error) {
-        if (error.code === "NoSuchKey") {
+        if (error instanceof Error && error.name === "NoSuchKey") {
           return null;
         }
         throw error;
