@@ -26584,7 +26584,7 @@ async function deployAssets({
   if (lastDeploymentLog) {
     console.log("Last deployment log:", lastDeploymentLog);
   } else {
-    console.log("Lastdeployment log not found.");
+    console.log("Last deployment log not found.");
   }
   const { filesToDelete, newDeploymentLog } = calculateChanges({
     lastDeploymentLog: lastDeploymentLog != null ? lastDeploymentLog : [],
