@@ -3,8 +3,6 @@ import path from "path";
 import { FileConfig, HostingConfig } from "./action";
 import { StorageService } from "./StorageService";
 
-export const entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
-
 type UploadFilesParams = {
   /**
    * Paths, relative to the project, NOT the folder being deployed.
@@ -20,24 +18,23 @@ type UploadFilesParams = {
 
 export async function uploadFiles({ files, sourceDir, storageService, hostingConfig }: UploadFilesParams) {
   const fileInfos = files.map((file) => ({
-    isEntrypoint: entryPointFileNames.includes(path.basename(file)),
+    config: hostingConfig.files.find((x) => x.path === path.relative(sourceDir, file)),
     file,
   }));
 
-  async function uploadFile(file: string) {
+  async function uploadFile({ file, config }: { file: string; config: FileConfig | undefined }) {
     const key = path.relative(sourceDir, file);
-    const fileConfig = hostingConfig.files.find((x) => x.path === key);
     await storageService.uploadFile({
       key,
       body: await fs.readFile(file),
-      ...(fileConfig ? getS3ObjectParams(fileConfig.headers) : {}),
+      ...(config ? getS3ObjectParams(config.headers) : {}),
     });
   }
 
-  const nonEntrypoints = fileInfos.filter(({ isEntrypoint }) => !isEntrypoint).map(({ file }) => file);
+  const nonEntrypoints = fileInfos.filter(({ config }) => !config?.isEntrypoint);
   await Promise.all(nonEntrypoints.map(uploadFile));
 
-  const entrypoints = fileInfos.filter(({ isEntrypoint }) => isEntrypoint).map(({ file }) => file);
+  const entrypoints = fileInfos.filter(({ config }) => config?.isEntrypoint);
   await Promise.all(entrypoints.map(uploadFile));
 }
 

@@ -26456,23 +26456,21 @@ var S3Client = function(_super) {
 // src/uploadFiles.ts
 var import_fs6 = __toModule(require("fs"));
 var import_path3 = __toModule(require("path"));
-var entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
 async function uploadFiles({ files: files4, sourceDir, storageService, hostingConfig }) {
   const fileInfos = files4.map((file) => ({
-    isEntrypoint: entryPointFileNames.includes(import_path3.default.basename(file)),
+    config: hostingConfig.files.find((x) => x.path === import_path3.default.relative(sourceDir, file)),
     file
   }));
-  async function uploadFile(file) {
+  async function uploadFile({ file, config }) {
     const key = import_path3.default.relative(sourceDir, file);
-    const fileConfig = hostingConfig.files.find((x) => x.path === key);
     await storageService.uploadFile(__spreadValues({
       key,
       body: await import_fs6.promises.readFile(file)
-    }, fileConfig ? getS3ObjectParams(fileConfig.headers) : {}));
+    }, config ? getS3ObjectParams(config.headers) : {}));
   }
-  const nonEntrypoints = fileInfos.filter(({ isEntrypoint }) => !isEntrypoint).map(({ file }) => file);
+  const nonEntrypoints = fileInfos.filter(({ config }) => !(config == null ? void 0 : config.isEntrypoint));
   await Promise.all(nonEntrypoints.map(uploadFile));
-  const entrypoints = fileInfos.filter(({ isEntrypoint }) => isEntrypoint).map(({ file }) => file);
+  const entrypoints = fileInfos.filter(({ config }) => config == null ? void 0 : config.isEntrypoint);
   await Promise.all(entrypoints.map(uploadFile));
 }
 function getS3ObjectParams(headers) {
@@ -26651,6 +26649,14 @@ async function readableToString(readable) {
 // src/action.ts
 var import_fs7 = __toModule(require("fs"));
 var import_fs8 = __toModule(require("fs"));
+var entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
+var defaultHostingConfig = {
+  files: entryPointFileNames.map((path3) => ({
+    path: path3,
+    headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }],
+    isEntrypoint: true
+  }))
+};
 async function action({ sourceDir, bucket, maxDays }) {
   var _a;
   const s3Client = new S3Client({});
@@ -26658,7 +26664,7 @@ async function action({ sourceDir, bucket, maxDays }) {
     s3Client,
     bucket
   });
-  const hostingConfig = (_a = await readHostingConfig()) != null ? _a : { files: [] };
+  const hostingConfig = (_a = await readHostingConfig()) != null ? _a : defaultHostingConfig;
   await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
 }
 var fileExists = (file) => import_fs8.promises.access(file, import_fs7.constants.R_OK).then(() => true).catch(() => false);
