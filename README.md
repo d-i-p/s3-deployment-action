@@ -29,7 +29,7 @@ export type HostingConfig = {
 
 export type FileConfig = {
   path: string;
-  isEntrypoint?: boolean;
+  isEntrypoint?: boolean; // true, if should be uploaded last
   headers: {
     key: string;
     value: string;

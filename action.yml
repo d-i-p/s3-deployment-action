@@ -11,5 +11,5 @@ inputs:
     description: 'Maximum number of days to keep an asset after it became unused'
     required: true
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: 'node16'
+  main: 'dist/index.mjs'

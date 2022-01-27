@@ -2,4 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 yarn dist
-git add dist/index.js
+git add dist/index.mjs
