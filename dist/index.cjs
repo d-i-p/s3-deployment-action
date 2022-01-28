@@ -23,27 +23,31 @@ var __spreadValues = (a, b) => {
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[Object.keys(fn)[0]])(fn = 0)), res;
+  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
 };
 var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var __export = (target, all) => {
-  __markAsModule(target);
   for (var name4 in all)
     __defProp(target, name4, { get: all[name4], enumerable: true });
 };
-var __reExport = (target, module5, desc) => {
+var __reExport = (target, module5, copyDefault, desc) => {
   if (module5 && typeof module5 === "object" || typeof module5 === "function") {
     for (let key of __getOwnPropNames(module5))
-      if (!__hasOwnProp.call(target, key) && key !== "default")
+      if (!__hasOwnProp.call(target, key) && (copyDefault || key !== "default"))
         __defProp(target, key, { get: () => module5[key], enumerable: !(desc = __getOwnPropDesc(module5, key)) || desc.enumerable });
   }
   return target;
 };
-var __toModule = (module5) => {
-  return __reExport(__markAsModule(__defProp(module5 != null ? __create(__getProtoOf(module5)) : {}, "default", module5 && module5.__esModule && "default" in module5 ? { get: () => module5.default, enumerable: true } : { value: module5, enumerable: true })), module5);
+var __toESM = (module5, isNodeMode) => {
+  return __reExport(__markAsModule(__defProp(module5 != null ? __create(__getProtoOf(module5)) : {}, "default", !isNodeMode && module5 && module5.__esModule ? { get: () => module5.default, enumerable: true } : { value: module5, enumerable: true })), module5);
 };
+var __toCommonJS = /* @__PURE__ */ ((cache) => {
+  return (module5, temp) => {
+    return cache && cache.get(module5) || (temp = __reExport(__markAsModule({}), module5, 1), cache && cache.set(module5, temp), temp);
+  };
+})(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 
 // node_modules/@actions/core/lib/utils.js
 var require_utils = __commonJS({
@@ -4053,10 +4057,10 @@ var require_tslib2 = __commonJS({
   }
 });
 
-// node_modules/@aws-sdk/util-utf8-browser/dist-es/pureJs.js
+// node_modules/@aws-crypto/util/node_modules/@aws-sdk/util-utf8-browser/dist-es/pureJs.js
 var fromUtf82, toUtf82;
 var init_pureJs = __esm({
-  "node_modules/@aws-sdk/util-utf8-browser/dist-es/pureJs.js"() {
+  "node_modules/@aws-crypto/util/node_modules/@aws-sdk/util-utf8-browser/dist-es/pureJs.js"() {
     fromUtf82 = function(input) {
       var bytes = [];
       for (var i = 0, len = input.length; i < len; i++) {
@@ -4098,7 +4102,7 @@ var init_pureJs = __esm({
   }
 });
 
-// node_modules/@aws-sdk/util-utf8-browser/dist-es/whatwgEncodingApi.js
+// node_modules/@aws-crypto/util/node_modules/@aws-sdk/util-utf8-browser/dist-es/whatwgEncodingApi.js
 function fromUtf83(input) {
   return new TextEncoder().encode(input);
 }
@@ -4106,11 +4110,11 @@ function toUtf83(input) {
   return new TextDecoder("utf-8").decode(input);
 }
 var init_whatwgEncodingApi = __esm({
-  "node_modules/@aws-sdk/util-utf8-browser/dist-es/whatwgEncodingApi.js"() {
+  "node_modules/@aws-crypto/util/node_modules/@aws-sdk/util-utf8-browser/dist-es/whatwgEncodingApi.js"() {
   }
 });
 
-// node_modules/@aws-sdk/util-utf8-browser/dist-es/index.js
+// node_modules/@aws-crypto/util/node_modules/@aws-sdk/util-utf8-browser/dist-es/index.js
 var dist_es_exports = {};
 __export(dist_es_exports, {
   fromUtf8: () => fromUtf84,
@@ -4118,7 +4122,7 @@ __export(dist_es_exports, {
 });
 var fromUtf84, toUtf84;
 var init_dist_es = __esm({
-  "node_modules/@aws-sdk/util-utf8-browser/dist-es/index.js"() {
+  "node_modules/@aws-crypto/util/node_modules/@aws-sdk/util-utf8-browser/dist-es/index.js"() {
     init_pureJs();
     init_whatwgEncodingApi();
     fromUtf84 = function(input) {
@@ -4136,7 +4140,7 @@ var require_convertToBuffer = __commonJS({
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.convertToBuffer = void 0;
-    var util_utf8_browser_1 = (init_dist_es(), dist_es_exports);
+    var util_utf8_browser_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var fromUtf85 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
       return Buffer.from(input, "utf8");
     } : util_utf8_browser_1.fromUtf8;
@@ -14930,9 +14934,9 @@ var require_mime_types = __commonJS({
     exports.charsets = { lookup: charset };
     exports.contentType = contentType;
     exports.extension = extension;
-    exports.extensions = Object.create(null);
+    exports.extensions = /* @__PURE__ */ Object.create(null);
     exports.lookup = lookup2;
-    exports.types = Object.create(null);
+    exports.types = /* @__PURE__ */ Object.create(null);
     populateMaps(exports.extensions, exports.types);
     function charset(type) {
       if (!type || typeof type !== "string") {
@@ -15010,13 +15014,14 @@ var require_mime_types = __commonJS({
 });
 
 // src/index.ts
-__export(exports, {
+var src_exports = {};
+__export(src_exports, {
   getActionParams: () => getActionParams
 });
-var import_core = __toModule(require_core());
+var import_core = __toESM(require_core(), 1);
 
 // node_modules/tslib/modules/index.js
-var import_tslib = __toModule(require_tslib());
+var import_tslib = __toESM(require_tslib(), 1);
 var {
   __extends,
   __assign,
@@ -15534,20 +15539,28 @@ var deserializerMiddleware = function(options, deserializer) {
   return function(next, context) {
     return function(args) {
       return __awaiter(void 0, void 0, void 0, function() {
-        var response, parsed;
+        var response, parsed, error_1;
         return __generator(this, function(_a) {
           switch (_a.label) {
             case 0:
               return [4, next(args)];
             case 1:
               response = _a.sent().response;
-              return [4, deserializer(response, options)];
+              _a.label = 2;
             case 2:
+              _a.trys.push([2, 4, , 5]);
+              return [4, deserializer(response, options)];
+            case 3:
               parsed = _a.sent();
               return [2, {
                 response,
                 output: parsed
               }];
+            case 4:
+              error_1 = _a.sent();
+              throw Object.assign(error_1, { $response: response });
+            case 5:
+              return [2];
           }
         });
       });
@@ -15601,7 +15614,7 @@ function getSerdePlugin(config, serializer, deserializer) {
 var constructStack = function() {
   var absoluteEntries = [];
   var relativeEntries = [];
-  var entriesNameSet = new Set();
+  var entriesNameSet = /* @__PURE__ */ new Set();
   var sort = function(entries) {
     return entries.sort(function(a, b) {
       return stepWeights[b.step] - stepWeights[a.step] || priorityWeights[b.priority || "normal"] - priorityWeights[a.priority || "normal"];
@@ -16119,12 +16132,31 @@ var stripLeadingZeroes = function(value) {
   return value.slice(idx);
 };
 
-// node_modules/@aws-sdk/smithy-client/dist-es/emitWarningIfUnsupportedVersion.js
-var warningEmitted = false;
-var emitWarningIfUnsupportedVersion = function(version5) {
-  if (version5 && !warningEmitted && parseInt(version5.substring(1, version5.indexOf("."))) < 12) {
-    warningEmitted = true;
-    process.emitWarning("The AWS SDK for JavaScript (v3) will\n" + ("no longer support Node.js " + version5 + " as of January 1, 2022.\n") + "To continue receiving updates to AWS services, bug fixes, and security\nupdates please upgrade to Node.js 12.x or later.\n\nMore information can be found at: https://a.co/1l6FLnu", "NodeDeprecationWarning");
+// node_modules/@aws-sdk/smithy-client/dist-es/defaults-mode.js
+var loadConfigsForDefaultMode = function(mode) {
+  switch (mode) {
+    case "standard":
+      return {
+        retryMode: "standard",
+        connectionTimeout: 3100
+      };
+    case "in-region":
+      return {
+        retryMode: "standard",
+        connectionTimeout: 1100
+      };
+    case "cross-region":
+      return {
+        retryMode: "standard",
+        connectionTimeout: 3100
+      };
+    case "mobile":
+      return {
+        retryMode: "standard",
+        connectionTimeout: 3e4
+      };
+    default:
+      return {};
   }
 };
 
@@ -16211,12 +16243,6 @@ var AbortMultipartUploadRequest;
     return __assign({}, obj);
   };
 })(AbortMultipartUploadRequest || (AbortMultipartUploadRequest = {}));
-var NoSuchUpload;
-(function(NoSuchUpload2) {
-  NoSuchUpload2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(NoSuchUpload || (NoSuchUpload = {}));
 var AccelerateConfiguration;
 (function(AccelerateConfiguration2) {
   AccelerateConfiguration2.filterSensitiveLog = function(obj) {
@@ -16295,24 +16321,6 @@ var CopyObjectRequest;
     return __assign(__assign(__assign(__assign(__assign({}, obj), obj.SSECustomerKey && { SSECustomerKey: SENSITIVE_STRING }), obj.SSEKMSKeyId && { SSEKMSKeyId: SENSITIVE_STRING }), obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: SENSITIVE_STRING }), obj.CopySourceSSECustomerKey && { CopySourceSSECustomerKey: SENSITIVE_STRING });
   };
 })(CopyObjectRequest || (CopyObjectRequest = {}));
-var ObjectNotInActiveTierError;
-(function(ObjectNotInActiveTierError2) {
-  ObjectNotInActiveTierError2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(ObjectNotInActiveTierError || (ObjectNotInActiveTierError = {}));
-var BucketAlreadyExists;
-(function(BucketAlreadyExists2) {
-  BucketAlreadyExists2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(BucketAlreadyExists || (BucketAlreadyExists = {}));
-var BucketAlreadyOwnedByYou;
-(function(BucketAlreadyOwnedByYou2) {
-  BucketAlreadyOwnedByYou2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(BucketAlreadyOwnedByYou || (BucketAlreadyOwnedByYou = {}));
 var CreateBucketOutput;
 (function(CreateBucketOutput2) {
   CreateBucketOutput2.filterSensitiveLog = function(obj) {
@@ -16763,6 +16771,10 @@ var LifecycleRuleFilter;
       return visitor.Prefix(value.Prefix);
     if (value.Tag !== void 0)
       return visitor.Tag(value.Tag);
+    if (value.ObjectSizeGreaterThan !== void 0)
+      return visitor.ObjectSizeGreaterThan(value.ObjectSizeGreaterThan);
+    if (value.ObjectSizeLessThan !== void 0)
+      return visitor.ObjectSizeLessThan(value.ObjectSizeLessThan);
     if (value.And !== void 0)
       return visitor.And(value.And);
     return visitor._(value.$unknown[0], value.$unknown[1]);
@@ -16773,6 +16785,10 @@ var LifecycleRuleFilter;
       return { Prefix: obj.Prefix };
     if (obj.Tag !== void 0)
       return { Tag: Tag.filterSensitiveLog(obj.Tag) };
+    if (obj.ObjectSizeGreaterThan !== void 0)
+      return { ObjectSizeGreaterThan: obj.ObjectSizeGreaterThan };
+    if (obj.ObjectSizeLessThan !== void 0)
+      return { ObjectSizeLessThan: obj.ObjectSizeLessThan };
     if (obj.And !== void 0)
       return { And: LifecycleRuleAndOperator.filterSensitiveLog(obj.And) };
     if (obj.$unknown !== void 0)
@@ -16912,6 +16928,12 @@ var GetBucketNotificationConfigurationRequest;
     return __assign({}, obj);
   };
 })(GetBucketNotificationConfigurationRequest || (GetBucketNotificationConfigurationRequest = {}));
+var EventBridgeConfiguration;
+(function(EventBridgeConfiguration2) {
+  EventBridgeConfiguration2.filterSensitiveLog = function(obj) {
+    return __assign({}, obj);
+  };
+})(EventBridgeConfiguration || (EventBridgeConfiguration = {}));
 var FilterRule;
 (function(FilterRule2) {
   FilterRule2.filterSensitiveLog = function(obj) {
@@ -17221,18 +17243,6 @@ var GetObjectRequest;
     return __assign(__assign({}, obj), obj.SSECustomerKey && { SSECustomerKey: SENSITIVE_STRING });
   };
 })(GetObjectRequest || (GetObjectRequest = {}));
-var InvalidObjectState;
-(function(InvalidObjectState2) {
-  InvalidObjectState2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(InvalidObjectState || (InvalidObjectState = {}));
-var NoSuchKey;
-(function(NoSuchKey2) {
-  NoSuchKey2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(NoSuchKey || (NoSuchKey = {}));
 var GetObjectAclOutput;
 (function(GetObjectAclOutput2) {
   GetObjectAclOutput2.filterSensitiveLog = function(obj) {
@@ -17359,12 +17369,6 @@ var HeadBucketRequest;
     return __assign({}, obj);
   };
 })(HeadBucketRequest || (HeadBucketRequest = {}));
-var NotFound;
-(function(NotFound2) {
-  NotFound2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(NotFound || (NotFound = {}));
 var HeadObjectOutput;
 (function(HeadObjectOutput2) {
   HeadObjectOutput2.filterSensitiveLog = function(obj) {
@@ -17497,12 +17501,6 @@ var ListObjectsRequest;
     return __assign({}, obj);
   };
 })(ListObjectsRequest || (ListObjectsRequest = {}));
-var NoSuchBucket;
-(function(NoSuchBucket2) {
-  NoSuchBucket2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(NoSuchBucket || (NoSuchBucket = {}));
 var ListObjectsV2Output;
 (function(ListObjectsV2Output2) {
   ListObjectsV2Output2.filterSensitiveLog = function(obj) {
@@ -17799,24 +17797,12 @@ var PutPublicAccessBlockRequest;
     return __assign({}, obj);
   };
 })(PutPublicAccessBlockRequest || (PutPublicAccessBlockRequest = {}));
-var ObjectAlreadyInActiveTierError;
-(function(ObjectAlreadyInActiveTierError2) {
-  ObjectAlreadyInActiveTierError2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(ObjectAlreadyInActiveTierError || (ObjectAlreadyInActiveTierError = {}));
 var RestoreObjectOutput;
 (function(RestoreObjectOutput2) {
   RestoreObjectOutput2.filterSensitiveLog = function(obj) {
     return __assign({}, obj);
   };
 })(RestoreObjectOutput || (RestoreObjectOutput = {}));
-var GlacierJobParameters;
-(function(GlacierJobParameters2) {
-  GlacierJobParameters2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(GlacierJobParameters || (GlacierJobParameters = {}));
 
 // node_modules/@aws-sdk/xml-builder/dist-es/escape-attribute.js
 function escapeAttribute(value) {
@@ -17897,8 +17883,8 @@ var XmlText = function() {
 }();
 
 // node_modules/@aws-sdk/client-s3/dist-es/protocols/Aws_restXml.js
-var import_entities = __toModule(require_lib());
-var import_fast_xml_parser = __toModule(require_parser());
+var import_entities = __toESM(require_lib());
+var import_fast_xml_parser = __toESM(require_parser());
 var serializeAws_restXmlDeleteObjectsCommand = function(input, context) {
   return __awaiter(void 0, void 0, void 0, function() {
     var _a, hostname, _b, protocol, port, basePath, headers, resolvedPath, labelValue, query, body, contents;
@@ -20317,7 +20303,7 @@ var DefaultRateLimiter = function() {
 }();
 
 // node_modules/uuid/wrapper.mjs
-var import_dist = __toModule(require_dist());
+var import_dist = __toESM(require_dist(), 1);
 var v1 = import_dist.default.v1;
 var v3 = import_dist.default.v3;
 var v4 = import_dist.default.v4;
@@ -20942,7 +20928,7 @@ var awsAuthMiddleware = function(options) {
   return function(next, context) {
     return function(args) {
       return __awaiter(this, void 0, void 0, function() {
-        var signer, output, _a, _b, headers, dateHeader;
+        var signer, output, _a, _b, dateHeader;
         var _c;
         return __generator(this, function(_d) {
           switch (_d.label) {
@@ -20962,15 +20948,16 @@ var awsAuthMiddleware = function(options) {
               })];
             case 2:
               return [4, _a.apply(void 0, [__assign.apply(void 0, _b.concat([(_c.request = _d.sent(), _c)]))]).catch(function(error) {
-                if (error.ServerTime) {
-                  options.systemClockOffset = getUpdatedSystemClockOffset(error.ServerTime, options.systemClockOffset);
+                var _a2;
+                var serverTime = (_a2 = error.ServerTime) !== null && _a2 !== void 0 ? _a2 : getDateHeader(error.$response);
+                if (serverTime) {
+                  options.systemClockOffset = getUpdatedSystemClockOffset(serverTime, options.systemClockOffset);
                 }
                 throw error;
               })];
             case 3:
               output = _d.sent();
-              headers = output.response.headers;
-              dateHeader = headers && (headers.date || headers.Date);
+              dateHeader = getDateHeader(output.response);
               if (dateHeader) {
                 options.systemClockOffset = getUpdatedSystemClockOffset(dateHeader, options.systemClockOffset);
               }
@@ -20980,6 +20967,10 @@ var awsAuthMiddleware = function(options) {
       });
     };
   };
+};
+var getDateHeader = function(response) {
+  var _a, _b, _c;
+  return HttpResponse.isInstance(response) ? (_b = (_a = response.headers) === null || _a === void 0 ? void 0 : _a.date) !== null && _b !== void 0 ? _b : (_c = response.headers) === null || _c === void 0 ? void 0 : _c.Date : void 0;
 };
 var awsAuthMiddlewareOptions = {
   name: "awsAuthMiddleware",
@@ -21077,17 +21068,15 @@ var getUserAgentPlugin = function(config) {
 // node_modules/@aws-sdk/client-s3/package.json
 var name = "@aws-sdk/client-s3";
 var description = "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native";
-var version2 = "3.41.0";
+var version2 = "3.48.0";
 var scripts = {
-  build: "yarn build:cjs && yarn build:es && yarn build:types",
-  "build:cjs": "tsc -p tsconfig.json",
-  "build:docs": "yarn clean:docs && typedoc ./",
+  build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
+  "build:cjs": "tsc -p tsconfig.cjs.json",
+  "build:docs": "typedoc",
   "build:es": "tsc -p tsconfig.es.json",
   "build:types": "tsc -p tsconfig.types.json",
-  clean: "yarn clean:dist && yarn clean:docs",
-  "clean:dist": "rimraf ./dist",
-  "clean:docs": "rimraf ./docs",
-  "downlevel-dts": "downlevel-dts dist-types dist-types/ts3.4",
+  "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
+  clean: "rimraf ./dist-*",
   test: "yarn test:unit",
   "test:e2e": "ts-mocha test/**/*.ispec.ts && karma start karma.conf.js",
   "test:unit": "ts-mocha test/**/*.spec.ts"
@@ -21099,66 +21088,62 @@ var sideEffects = false;
 var dependencies = {
   "@aws-crypto/sha256-browser": "2.0.0",
   "@aws-crypto/sha256-js": "2.0.0",
-  "@aws-sdk/client-sts": "3.41.0",
-  "@aws-sdk/config-resolver": "3.40.0",
-  "@aws-sdk/credential-provider-node": "3.41.0",
-  "@aws-sdk/eventstream-serde-browser": "3.40.0",
-  "@aws-sdk/eventstream-serde-config-resolver": "3.40.0",
-  "@aws-sdk/eventstream-serde-node": "3.40.0",
-  "@aws-sdk/fetch-http-handler": "3.40.0",
-  "@aws-sdk/hash-blob-browser": "3.40.0",
-  "@aws-sdk/hash-node": "3.40.0",
-  "@aws-sdk/hash-stream-node": "3.40.0",
-  "@aws-sdk/invalid-dependency": "3.40.0",
-  "@aws-sdk/md5-js": "3.40.0",
-  "@aws-sdk/middleware-apply-body-checksum": "3.40.0",
-  "@aws-sdk/middleware-bucket-endpoint": "3.41.0",
-  "@aws-sdk/middleware-content-length": "3.40.0",
-  "@aws-sdk/middleware-expect-continue": "3.40.0",
-  "@aws-sdk/middleware-host-header": "3.40.0",
-  "@aws-sdk/middleware-location-constraint": "3.40.0",
-  "@aws-sdk/middleware-logger": "3.40.0",
-  "@aws-sdk/middleware-retry": "3.40.0",
-  "@aws-sdk/middleware-sdk-s3": "3.41.0",
-  "@aws-sdk/middleware-serde": "3.40.0",
-  "@aws-sdk/middleware-signing": "3.40.0",
-  "@aws-sdk/middleware-ssec": "3.40.0",
-  "@aws-sdk/middleware-stack": "3.40.0",
-  "@aws-sdk/middleware-user-agent": "3.40.0",
-  "@aws-sdk/node-config-provider": "3.40.0",
-  "@aws-sdk/node-http-handler": "3.40.0",
-  "@aws-sdk/protocol-http": "3.40.0",
-  "@aws-sdk/smithy-client": "3.41.0",
-  "@aws-sdk/types": "3.40.0",
-  "@aws-sdk/url-parser": "3.40.0",
-  "@aws-sdk/util-base64-browser": "3.37.0",
-  "@aws-sdk/util-base64-node": "3.37.0",
-  "@aws-sdk/util-body-length-browser": "3.37.0",
-  "@aws-sdk/util-body-length-node": "3.37.0",
-  "@aws-sdk/util-user-agent-browser": "3.40.0",
-  "@aws-sdk/util-user-agent-node": "3.40.0",
-  "@aws-sdk/util-utf8-browser": "3.37.0",
-  "@aws-sdk/util-utf8-node": "3.37.0",
-  "@aws-sdk/util-waiter": "3.40.0",
-  "@aws-sdk/xml-builder": "3.37.0",
+  "@aws-sdk/client-sts": "3.48.0",
+  "@aws-sdk/config-resolver": "3.47.2",
+  "@aws-sdk/credential-provider-node": "3.48.0",
+  "@aws-sdk/eventstream-serde-browser": "3.47.2",
+  "@aws-sdk/eventstream-serde-config-resolver": "3.47.2",
+  "@aws-sdk/eventstream-serde-node": "3.47.2",
+  "@aws-sdk/fetch-http-handler": "3.47.2",
+  "@aws-sdk/hash-blob-browser": "3.47.2",
+  "@aws-sdk/hash-node": "3.47.2",
+  "@aws-sdk/hash-stream-node": "3.47.2",
+  "@aws-sdk/invalid-dependency": "3.47.2",
+  "@aws-sdk/md5-js": "3.47.2",
+  "@aws-sdk/middleware-apply-body-checksum": "3.47.2",
+  "@aws-sdk/middleware-bucket-endpoint": "3.47.2",
+  "@aws-sdk/middleware-content-length": "3.47.2",
+  "@aws-sdk/middleware-expect-continue": "3.47.2",
+  "@aws-sdk/middleware-host-header": "3.47.2",
+  "@aws-sdk/middleware-location-constraint": "3.47.2",
+  "@aws-sdk/middleware-logger": "3.47.2",
+  "@aws-sdk/middleware-retry": "3.47.2",
+  "@aws-sdk/middleware-sdk-s3": "3.47.2",
+  "@aws-sdk/middleware-serde": "3.47.2",
+  "@aws-sdk/middleware-signing": "3.47.2",
+  "@aws-sdk/middleware-ssec": "3.47.2",
+  "@aws-sdk/middleware-stack": "3.47.2",
+  "@aws-sdk/middleware-user-agent": "3.47.2",
+  "@aws-sdk/node-config-provider": "3.47.2",
+  "@aws-sdk/node-http-handler": "3.47.2",
+  "@aws-sdk/protocol-http": "3.47.2",
+  "@aws-sdk/smithy-client": "3.47.2",
+  "@aws-sdk/types": "3.47.1",
+  "@aws-sdk/url-parser": "3.47.2",
+  "@aws-sdk/util-base64-browser": "3.47.1",
+  "@aws-sdk/util-base64-node": "3.47.2",
+  "@aws-sdk/util-body-length-browser": "3.47.1",
+  "@aws-sdk/util-body-length-node": "3.47.1",
+  "@aws-sdk/util-defaults-mode-browser": "3.47.2",
+  "@aws-sdk/util-defaults-mode-node": "3.47.2",
+  "@aws-sdk/util-user-agent-browser": "3.47.2",
+  "@aws-sdk/util-user-agent-node": "3.47.2",
+  "@aws-sdk/util-utf8-browser": "3.47.1",
+  "@aws-sdk/util-utf8-node": "3.47.2",
+  "@aws-sdk/util-waiter": "3.47.2",
+  "@aws-sdk/xml-builder": "3.47.1",
   entities: "2.2.0",
   "fast-xml-parser": "3.19.0",
   tslib: "^2.3.0"
 };
 var devDependencies = {
-  "@aws-sdk/service-client-documentation-generator": "3.38.0",
+  "@aws-sdk/service-client-documentation-generator": "3.47.1",
   "@types/chai": "^4.2.11",
   "@types/mocha": "^8.0.4",
-  "@types/node": "^12.7.5",
-  "downlevel-dts": "0.7.0",
-  jest: "^26.1.0",
-  rimraf: "^3.0.0",
-  "ts-jest": "^26.4.1",
-  typedoc: "^0.19.2",
-  typescript: "~4.3.5"
+  "@types/node": "^12.7.5"
 };
 var engines = {
-  node: ">=10.0.0"
+  node: ">=12.0.0"
 };
 var typesVersions = {
   "<4.0": {
@@ -21246,30 +21231,6 @@ var AssumeRoleResponse;
     return __assign({}, obj);
   };
 })(AssumeRoleResponse || (AssumeRoleResponse = {}));
-var ExpiredTokenException;
-(function(ExpiredTokenException2) {
-  ExpiredTokenException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(ExpiredTokenException || (ExpiredTokenException = {}));
-var MalformedPolicyDocumentException;
-(function(MalformedPolicyDocumentException2) {
-  MalformedPolicyDocumentException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(MalformedPolicyDocumentException || (MalformedPolicyDocumentException = {}));
-var PackedPolicyTooLargeException;
-(function(PackedPolicyTooLargeException2) {
-  PackedPolicyTooLargeException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(PackedPolicyTooLargeException || (PackedPolicyTooLargeException = {}));
-var RegionDisabledException;
-(function(RegionDisabledException2) {
-  RegionDisabledException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(RegionDisabledException || (RegionDisabledException = {}));
 var AssumeRoleWithSAMLRequest;
 (function(AssumeRoleWithSAMLRequest2) {
   AssumeRoleWithSAMLRequest2.filterSensitiveLog = function(obj) {
@@ -21282,18 +21243,6 @@ var AssumeRoleWithSAMLResponse;
     return __assign({}, obj);
   };
 })(AssumeRoleWithSAMLResponse || (AssumeRoleWithSAMLResponse = {}));
-var IDPRejectedClaimException;
-(function(IDPRejectedClaimException2) {
-  IDPRejectedClaimException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(IDPRejectedClaimException || (IDPRejectedClaimException = {}));
-var InvalidIdentityTokenException;
-(function(InvalidIdentityTokenException2) {
-  InvalidIdentityTokenException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(InvalidIdentityTokenException || (InvalidIdentityTokenException = {}));
 var AssumeRoleWithWebIdentityRequest;
 (function(AssumeRoleWithWebIdentityRequest2) {
   AssumeRoleWithWebIdentityRequest2.filterSensitiveLog = function(obj) {
@@ -21306,12 +21255,6 @@ var AssumeRoleWithWebIdentityResponse;
     return __assign({}, obj);
   };
 })(AssumeRoleWithWebIdentityResponse || (AssumeRoleWithWebIdentityResponse = {}));
-var IDPCommunicationErrorException;
-(function(IDPCommunicationErrorException2) {
-  IDPCommunicationErrorException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(IDPCommunicationErrorException || (IDPCommunicationErrorException = {}));
 var DecodeAuthorizationMessageRequest;
 (function(DecodeAuthorizationMessageRequest2) {
   DecodeAuthorizationMessageRequest2.filterSensitiveLog = function(obj) {
@@ -21324,12 +21267,6 @@ var DecodeAuthorizationMessageResponse;
     return __assign({}, obj);
   };
 })(DecodeAuthorizationMessageResponse || (DecodeAuthorizationMessageResponse = {}));
-var InvalidAuthorizationMessageException;
-(function(InvalidAuthorizationMessageException2) {
-  InvalidAuthorizationMessageException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(InvalidAuthorizationMessageException || (InvalidAuthorizationMessageException = {}));
 var GetAccessKeyInfoRequest;
 (function(GetAccessKeyInfoRequest2) {
   GetAccessKeyInfoRequest2.filterSensitiveLog = function(obj) {
@@ -21386,8 +21323,8 @@ var GetSessionTokenResponse;
 })(GetSessionTokenResponse || (GetSessionTokenResponse = {}));
 
 // node_modules/@aws-sdk/client-sts/dist-es/protocols/Aws_query.js
-var import_entities2 = __toModule(require_lib());
-var import_fast_xml_parser2 = __toModule(require_parser());
+var import_entities2 = __toESM(require_lib());
+var import_fast_xml_parser2 = __toESM(require_parser());
 var serializeAws_queryAssumeRoleCommand = function(input, context) {
   return __awaiter(void 0, void 0, void 0, function() {
     var headers, body;
@@ -22210,18 +22147,15 @@ var resolveStsAuthConfig = function(input, _a) {
 // node_modules/@aws-sdk/client-sts/package.json
 var name2 = "@aws-sdk/client-sts";
 var description2 = "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native";
-var version3 = "3.41.0";
+var version3 = "3.48.0";
 var scripts2 = {
-  build: "yarn build:cjs && yarn build:es && yarn build:types",
-  "build:cjs": "tsc -p tsconfig.json",
-  "build:docs": "yarn clean:docs && typedoc ./",
+  build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
+  "build:cjs": "tsc -p tsconfig.cjs.json",
+  "build:docs": "typedoc",
   "build:es": "tsc -p tsconfig.es.json",
   "build:types": "tsc -p tsconfig.types.json",
-  clean: "yarn clean:dist && yarn clean:docs",
-  "clean:dist": "rimraf ./dist",
-  "clean:docs": "rimraf ./docs",
-  "downlevel-dts": "downlevel-dts dist-types dist-types/ts3.4",
-  test: "exit 0"
+  "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
+  clean: "rimraf ./dist-*"
 };
 var main2 = "./dist-cjs/index.js";
 var types2 = "./dist-types/index.d.ts";
@@ -22230,50 +22164,46 @@ var sideEffects2 = false;
 var dependencies2 = {
   "@aws-crypto/sha256-browser": "2.0.0",
   "@aws-crypto/sha256-js": "2.0.0",
-  "@aws-sdk/config-resolver": "3.40.0",
-  "@aws-sdk/credential-provider-node": "3.41.0",
-  "@aws-sdk/fetch-http-handler": "3.40.0",
-  "@aws-sdk/hash-node": "3.40.0",
-  "@aws-sdk/invalid-dependency": "3.40.0",
-  "@aws-sdk/middleware-content-length": "3.40.0",
-  "@aws-sdk/middleware-host-header": "3.40.0",
-  "@aws-sdk/middleware-logger": "3.40.0",
-  "@aws-sdk/middleware-retry": "3.40.0",
-  "@aws-sdk/middleware-sdk-sts": "3.40.0",
-  "@aws-sdk/middleware-serde": "3.40.0",
-  "@aws-sdk/middleware-signing": "3.40.0",
-  "@aws-sdk/middleware-stack": "3.40.0",
-  "@aws-sdk/middleware-user-agent": "3.40.0",
-  "@aws-sdk/node-config-provider": "3.40.0",
-  "@aws-sdk/node-http-handler": "3.40.0",
-  "@aws-sdk/protocol-http": "3.40.0",
-  "@aws-sdk/smithy-client": "3.41.0",
-  "@aws-sdk/types": "3.40.0",
-  "@aws-sdk/url-parser": "3.40.0",
-  "@aws-sdk/util-base64-browser": "3.37.0",
-  "@aws-sdk/util-base64-node": "3.37.0",
-  "@aws-sdk/util-body-length-browser": "3.37.0",
-  "@aws-sdk/util-body-length-node": "3.37.0",
-  "@aws-sdk/util-user-agent-browser": "3.40.0",
-  "@aws-sdk/util-user-agent-node": "3.40.0",
-  "@aws-sdk/util-utf8-browser": "3.37.0",
-  "@aws-sdk/util-utf8-node": "3.37.0",
+  "@aws-sdk/config-resolver": "3.47.2",
+  "@aws-sdk/credential-provider-node": "3.48.0",
+  "@aws-sdk/fetch-http-handler": "3.47.2",
+  "@aws-sdk/hash-node": "3.47.2",
+  "@aws-sdk/invalid-dependency": "3.47.2",
+  "@aws-sdk/middleware-content-length": "3.47.2",
+  "@aws-sdk/middleware-host-header": "3.47.2",
+  "@aws-sdk/middleware-logger": "3.47.2",
+  "@aws-sdk/middleware-retry": "3.47.2",
+  "@aws-sdk/middleware-sdk-sts": "3.47.2",
+  "@aws-sdk/middleware-serde": "3.47.2",
+  "@aws-sdk/middleware-signing": "3.47.2",
+  "@aws-sdk/middleware-stack": "3.47.2",
+  "@aws-sdk/middleware-user-agent": "3.47.2",
+  "@aws-sdk/node-config-provider": "3.47.2",
+  "@aws-sdk/node-http-handler": "3.47.2",
+  "@aws-sdk/protocol-http": "3.47.2",
+  "@aws-sdk/smithy-client": "3.47.2",
+  "@aws-sdk/types": "3.47.1",
+  "@aws-sdk/url-parser": "3.47.2",
+  "@aws-sdk/util-base64-browser": "3.47.1",
+  "@aws-sdk/util-base64-node": "3.47.2",
+  "@aws-sdk/util-body-length-browser": "3.47.1",
+  "@aws-sdk/util-body-length-node": "3.47.1",
+  "@aws-sdk/util-defaults-mode-browser": "3.47.2",
+  "@aws-sdk/util-defaults-mode-node": "3.47.2",
+  "@aws-sdk/util-user-agent-browser": "3.47.2",
+  "@aws-sdk/util-user-agent-node": "3.47.2",
+  "@aws-sdk/util-utf8-browser": "3.47.1",
+  "@aws-sdk/util-utf8-node": "3.47.2",
   entities: "2.2.0",
   "fast-xml-parser": "3.19.0",
   tslib: "^2.3.0"
 };
 var devDependencies2 = {
-  "@aws-sdk/service-client-documentation-generator": "3.38.0",
-  "@types/node": "^12.7.5",
-  "downlevel-dts": "0.7.0",
-  jest: "^26.1.0",
-  rimraf: "^3.0.0",
-  "ts-jest": "^26.4.1",
-  typedoc: "^0.19.2",
-  typescript: "~4.3.5"
+  "@aws-sdk/service-client-documentation-generator": "3.47.1",
+  "@types/node": "^12.7.5"
 };
 var engines2 = {
-  node: ">=10.0.0"
+  node: ">=12.0.0"
 };
 var typesVersions2 = {
   "<4.0": {
@@ -22447,11 +22377,11 @@ function fromEnv() {
 }
 
 // node_modules/@aws-sdk/credential-provider-imds/dist-es/fromContainerMetadata.js
-var import_url = __toModule(require("url"));
+var import_url = require("url");
 
 // node_modules/@aws-sdk/credential-provider-imds/dist-es/remoteProvider/httpRequest.js
-var import_buffer = __toModule(require("buffer"));
-var import_http = __toModule(require("http"));
+var import_buffer = require("buffer");
+var import_http = require("http");
 function httpRequest(options) {
   return new Promise(function(resolve, reject) {
     var _a;
@@ -22619,9 +22549,9 @@ var fromEnv2 = function(envVarSelector) {
 };
 
 // node_modules/@aws-sdk/shared-ini-file-loader/dist-es/index.js
-var import_fs = __toModule(require("fs"));
-var import_os = __toModule(require("os"));
-var import_path = __toModule(require("path"));
+var import_fs = require("fs");
+var import_os = require("os");
+var import_path = require("path");
 var ENV_CREDENTIALS_PATH = "AWS_SHARED_CREDENTIALS_FILE";
 var ENV_CONFIG_PATH = "AWS_CONFIG_FILE";
 var swallowError = function() {
@@ -22776,7 +22706,12 @@ var fromStatic2 = function(defaultValue) {
   return isFunction(defaultValue) ? function() {
     return __awaiter(void 0, void 0, void 0, function() {
       return __generator(this, function(_a) {
-        return [2, defaultValue()];
+        switch (_a.label) {
+          case 0:
+            return [4, defaultValue()];
+          case 1:
+            return [2, _a.sent()];
+        }
       });
     });
   } : fromStatic(defaultValue);
@@ -23109,30 +23044,6 @@ var GetRoleCredentialsResponse;
     return __assign(__assign({}, obj), obj.roleCredentials && { roleCredentials: RoleCredentials.filterSensitiveLog(obj.roleCredentials) });
   };
 })(GetRoleCredentialsResponse || (GetRoleCredentialsResponse = {}));
-var InvalidRequestException;
-(function(InvalidRequestException2) {
-  InvalidRequestException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(InvalidRequestException || (InvalidRequestException = {}));
-var ResourceNotFoundException;
-(function(ResourceNotFoundException2) {
-  ResourceNotFoundException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(ResourceNotFoundException || (ResourceNotFoundException = {}));
-var TooManyRequestsException;
-(function(TooManyRequestsException2) {
-  TooManyRequestsException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(TooManyRequestsException || (TooManyRequestsException = {}));
-var UnauthorizedException;
-(function(UnauthorizedException2) {
-  UnauthorizedException2.filterSensitiveLog = function(obj) {
-    return __assign({}, obj);
-  };
-})(UnauthorizedException || (UnauthorizedException = {}));
 var ListAccountRolesRequest;
 (function(ListAccountRolesRequest2) {
   ListAccountRolesRequest2.filterSensitiveLog = function(obj) {
@@ -23476,18 +23387,15 @@ var GetRoleCredentialsCommand = function(_super) {
 // node_modules/@aws-sdk/client-sso/package.json
 var name3 = "@aws-sdk/client-sso";
 var description3 = "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native";
-var version4 = "3.41.0";
+var version4 = "3.48.0";
 var scripts3 = {
-  build: "yarn build:cjs && yarn build:es && yarn build:types",
-  "build:cjs": "tsc -p tsconfig.json",
-  "build:docs": "yarn clean:docs && typedoc ./",
+  build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
+  "build:cjs": "tsc -p tsconfig.cjs.json",
+  "build:docs": "typedoc",
   "build:es": "tsc -p tsconfig.es.json",
   "build:types": "tsc -p tsconfig.types.json",
-  clean: "yarn clean:dist && yarn clean:docs",
-  "clean:dist": "rimraf ./dist",
-  "clean:docs": "rimraf ./docs",
-  "downlevel-dts": "downlevel-dts dist-types dist-types/ts3.4",
-  test: "exit 0"
+  "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
+  clean: "rimraf ./dist-*"
 };
 var main3 = "./dist-cjs/index.js";
 var types3 = "./dist-types/index.d.ts";
@@ -23496,45 +23404,41 @@ var sideEffects3 = false;
 var dependencies3 = {
   "@aws-crypto/sha256-browser": "2.0.0",
   "@aws-crypto/sha256-js": "2.0.0",
-  "@aws-sdk/config-resolver": "3.40.0",
-  "@aws-sdk/fetch-http-handler": "3.40.0",
-  "@aws-sdk/hash-node": "3.40.0",
-  "@aws-sdk/invalid-dependency": "3.40.0",
-  "@aws-sdk/middleware-content-length": "3.40.0",
-  "@aws-sdk/middleware-host-header": "3.40.0",
-  "@aws-sdk/middleware-logger": "3.40.0",
-  "@aws-sdk/middleware-retry": "3.40.0",
-  "@aws-sdk/middleware-serde": "3.40.0",
-  "@aws-sdk/middleware-stack": "3.40.0",
-  "@aws-sdk/middleware-user-agent": "3.40.0",
-  "@aws-sdk/node-config-provider": "3.40.0",
-  "@aws-sdk/node-http-handler": "3.40.0",
-  "@aws-sdk/protocol-http": "3.40.0",
-  "@aws-sdk/smithy-client": "3.41.0",
-  "@aws-sdk/types": "3.40.0",
-  "@aws-sdk/url-parser": "3.40.0",
-  "@aws-sdk/util-base64-browser": "3.37.0",
-  "@aws-sdk/util-base64-node": "3.37.0",
-  "@aws-sdk/util-body-length-browser": "3.37.0",
-  "@aws-sdk/util-body-length-node": "3.37.0",
-  "@aws-sdk/util-user-agent-browser": "3.40.0",
-  "@aws-sdk/util-user-agent-node": "3.40.0",
-  "@aws-sdk/util-utf8-browser": "3.37.0",
-  "@aws-sdk/util-utf8-node": "3.37.0",
+  "@aws-sdk/config-resolver": "3.47.2",
+  "@aws-sdk/fetch-http-handler": "3.47.2",
+  "@aws-sdk/hash-node": "3.47.2",
+  "@aws-sdk/invalid-dependency": "3.47.2",
+  "@aws-sdk/middleware-content-length": "3.47.2",
+  "@aws-sdk/middleware-host-header": "3.47.2",
+  "@aws-sdk/middleware-logger": "3.47.2",
+  "@aws-sdk/middleware-retry": "3.47.2",
+  "@aws-sdk/middleware-serde": "3.47.2",
+  "@aws-sdk/middleware-stack": "3.47.2",
+  "@aws-sdk/middleware-user-agent": "3.47.2",
+  "@aws-sdk/node-config-provider": "3.47.2",
+  "@aws-sdk/node-http-handler": "3.47.2",
+  "@aws-sdk/protocol-http": "3.47.2",
+  "@aws-sdk/smithy-client": "3.47.2",
+  "@aws-sdk/types": "3.47.1",
+  "@aws-sdk/url-parser": "3.47.2",
+  "@aws-sdk/util-base64-browser": "3.47.1",
+  "@aws-sdk/util-base64-node": "3.47.2",
+  "@aws-sdk/util-body-length-browser": "3.47.1",
+  "@aws-sdk/util-body-length-node": "3.47.1",
+  "@aws-sdk/util-defaults-mode-browser": "3.47.2",
+  "@aws-sdk/util-defaults-mode-node": "3.47.2",
+  "@aws-sdk/util-user-agent-browser": "3.47.2",
+  "@aws-sdk/util-user-agent-node": "3.47.2",
+  "@aws-sdk/util-utf8-browser": "3.47.1",
+  "@aws-sdk/util-utf8-node": "3.47.2",
   tslib: "^2.3.0"
 };
 var devDependencies3 = {
-  "@aws-sdk/service-client-documentation-generator": "3.38.0",
-  "@types/node": "^12.7.5",
-  "downlevel-dts": "0.7.0",
-  jest: "^26.1.0",
-  rimraf: "^3.0.0",
-  "ts-jest": "^26.4.1",
-  typedoc: "^0.19.2",
-  typescript: "~4.3.5"
+  "@aws-sdk/service-client-documentation-generator": "3.47.1",
+  "@types/node": "^12.7.5"
 };
 var engines3 = {
-  node: ">=10.0.0"
+  node: ">=12.0.0"
 };
 var typesVersions3 = {
   "<4.0": {
@@ -23586,7 +23490,7 @@ var package_default3 = {
 };
 
 // node_modules/@aws-sdk/util-buffer-from/dist-es/index.js
-var import_buffer2 = __toModule(require("buffer"));
+var import_buffer2 = require("buffer");
 var fromArrayBuffer = function(input, offset, length) {
   if (offset === void 0) {
     offset = 0;
@@ -23607,8 +23511,8 @@ var fromString = function(input, encoding) {
 };
 
 // node_modules/@aws-sdk/hash-node/dist-es/index.js
-var import_buffer3 = __toModule(require("buffer"));
-var import_crypto = __toModule(require("crypto"));
+var import_buffer3 = require("buffer");
+var import_crypto = require("crypto");
 var Hash = function() {
   function Hash2(algorithmIdentifier, secret) {
     this.hash = secret ? (0, import_crypto.createHmac)(algorithmIdentifier, castSourceData(secret)) : (0, import_crypto.createHash)(algorithmIdentifier);
@@ -23670,8 +23574,8 @@ function buildQueryString(query) {
 }
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/node-http-handler.js
-var import_http2 = __toModule(require("http"));
-var import_https = __toModule(require("https"));
+var import_http2 = require("http");
+var import_https = require("https");
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/constants.js
 var NODEJS_TIMEOUT_ERROR_CODES = ["ECONNRESET", "EPIPE", "ETIMEDOUT"];
@@ -23735,7 +23639,7 @@ var setSocketTimeout = function(request2, reject, timeoutInMs) {
 };
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/write-request-body.js
-var import_stream = __toModule(require("stream"));
+var import_stream = require("stream");
 function writeRequestBody(httpRequest2, request2) {
   var expect = request2.headers["Expect"] || request2.headers["expect"];
   if (expect === "100-continue") {
@@ -23758,74 +23662,117 @@ function writeBody(httpRequest2, body) {
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/node-http-handler.js
 var NodeHttpHandler = function() {
-  function NodeHttpHandler2(_a) {
-    var _b = _a === void 0 ? {} : _a, connectionTimeout = _b.connectionTimeout, socketTimeout = _b.socketTimeout, httpAgent = _b.httpAgent, httpsAgent = _b.httpsAgent;
+  function NodeHttpHandler2(options) {
+    var _this = this;
     this.metadata = { handlerProtocol: "http/1.1" };
-    this.connectionTimeout = connectionTimeout;
-    this.socketTimeout = socketTimeout;
+    if (typeof options === "function") {
+      this.configProvider = function() {
+        return __awaiter(_this, void 0, void 0, function() {
+          var _a;
+          return __generator(this, function(_b) {
+            switch (_b.label) {
+              case 0:
+                _a = this.resolveDefaultConfig;
+                return [4, options()];
+              case 1:
+                return [2, _a.apply(this, [_b.sent()])];
+            }
+          });
+        });
+      };
+    } else {
+      this.config = this.resolveDefaultConfig(options);
+    }
+  }
+  NodeHttpHandler2.prototype.resolveDefaultConfig = function(options) {
+    var _a = options || {}, connectionTimeout = _a.connectionTimeout, socketTimeout = _a.socketTimeout, httpAgent = _a.httpAgent, httpsAgent = _a.httpsAgent;
     var keepAlive = true;
     var maxSockets = 50;
-    this.httpAgent = httpAgent || new import_http2.Agent({ keepAlive, maxSockets });
-    this.httpsAgent = httpsAgent || new import_https.Agent({ keepAlive, maxSockets });
-  }
+    return {
+      connectionTimeout,
+      socketTimeout,
+      httpAgent: httpAgent || new import_http2.Agent({ keepAlive, maxSockets }),
+      httpsAgent: httpsAgent || new import_https.Agent({ keepAlive, maxSockets })
+    };
+  };
   NodeHttpHandler2.prototype.destroy = function() {
-    this.httpAgent.destroy();
-    this.httpsAgent.destroy();
+    var _a, _b, _c, _d;
+    (_b = (_a = this.config) === null || _a === void 0 ? void 0 : _a.httpAgent) === null || _b === void 0 ? void 0 : _b.destroy();
+    (_d = (_c = this.config) === null || _c === void 0 ? void 0 : _c.httpsAgent) === null || _d === void 0 ? void 0 : _d.destroy();
   };
   NodeHttpHandler2.prototype.handle = function(request2, _a) {
-    var _this = this;
     var _b = _a === void 0 ? {} : _a, abortSignal = _b.abortSignal;
-    return new Promise(function(resolve, reject) {
-      if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
-        var abortError = new Error("Request aborted");
-        abortError.name = "AbortError";
-        reject(abortError);
-        return;
-      }
-      var isSSL = request2.protocol === "https:";
-      var queryString = buildQueryString(request2.query || {});
-      var nodeHttpsOptions = {
-        headers: request2.headers,
-        host: request2.hostname,
-        method: request2.method,
-        path: queryString ? request2.path + "?" + queryString : request2.path,
-        port: request2.port,
-        agent: isSSL ? _this.httpsAgent : _this.httpAgent
-      };
-      var requestFunc = isSSL ? import_https.request : import_http2.request;
-      var req = requestFunc(nodeHttpsOptions, function(res) {
-        var httpResponse = new HttpResponse({
-          statusCode: res.statusCode || -1,
-          headers: getTransformedHeaders(res.headers),
-          body: res
-        });
-        resolve({ response: httpResponse });
-      });
-      req.on("error", function(err) {
-        if (NODEJS_TIMEOUT_ERROR_CODES.includes(err.code)) {
-          reject(Object.assign(err, { name: "TimeoutError" }));
-        } else {
-          reject(err);
+    return __awaiter(this, void 0, void 0, function() {
+      var _c;
+      var _this = this;
+      return __generator(this, function(_d) {
+        switch (_d.label) {
+          case 0:
+            if (!(!this.config && this.configProvider))
+              return [3, 2];
+            _c = this;
+            return [4, this.configProvider()];
+          case 1:
+            _c.config = _d.sent();
+            _d.label = 2;
+          case 2:
+            return [2, new Promise(function(resolve, reject) {
+              if (!_this.config) {
+                throw new Error("Node HTTP request handler config is not resolved");
+              }
+              if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
+                var abortError = new Error("Request aborted");
+                abortError.name = "AbortError";
+                reject(abortError);
+                return;
+              }
+              var isSSL = request2.protocol === "https:";
+              var queryString = buildQueryString(request2.query || {});
+              var nodeHttpsOptions = {
+                headers: request2.headers,
+                host: request2.hostname,
+                method: request2.method,
+                path: queryString ? request2.path + "?" + queryString : request2.path,
+                port: request2.port,
+                agent: isSSL ? _this.config.httpsAgent : _this.config.httpAgent
+              };
+              var requestFunc = isSSL ? import_https.request : import_http2.request;
+              var req = requestFunc(nodeHttpsOptions, function(res) {
+                var httpResponse = new HttpResponse({
+                  statusCode: res.statusCode || -1,
+                  headers: getTransformedHeaders(res.headers),
+                  body: res
+                });
+                resolve({ response: httpResponse });
+              });
+              req.on("error", function(err) {
+                if (NODEJS_TIMEOUT_ERROR_CODES.includes(err.code)) {
+                  reject(Object.assign(err, { name: "TimeoutError" }));
+                } else {
+                  reject(err);
+                }
+              });
+              setConnectionTimeout(req, reject, _this.config.connectionTimeout);
+              setSocketTimeout(req, reject, _this.config.socketTimeout);
+              if (abortSignal) {
+                abortSignal.onabort = function() {
+                  req.abort();
+                  var abortError2 = new Error("Request aborted");
+                  abortError2.name = "AbortError";
+                  reject(abortError2);
+                };
+              }
+              writeRequestBody(req, request2);
+            })];
         }
       });
-      setConnectionTimeout(req, reject, _this.connectionTimeout);
-      setSocketTimeout(req, reject, _this.socketTimeout);
-      if (abortSignal) {
-        abortSignal.onabort = function() {
-          req.abort();
-          var abortError2 = new Error("Request aborted");
-          abortError2.name = "AbortError";
-          reject(abortError2);
-        };
-      }
-      writeRequestBody(req, request2);
     });
   };
   return NodeHttpHandler2;
 }();
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/node-http2-handler.js
-var import_http22 = __toModule(require("http2"));
+var import_http22 = require("http2");
 var NodeHttp2Handler = function() {
   function NodeHttp2Handler2(_a) {
     var _b = _a === void 0 ? {} : _a, requestTimeout = _b.requestTimeout, sessionTimeout = _b.sessionTimeout, disableConcurrentStreams = _b.disableConcurrentStreams;
@@ -23833,7 +23780,7 @@ var NodeHttp2Handler = function() {
     this.requestTimeout = requestTimeout;
     this.sessionTimeout = sessionTimeout;
     this.disableConcurrentStreams = disableConcurrentStreams;
-    this.sessionCache = new Map();
+    this.sessionCache = /* @__PURE__ */ new Map();
   }
   NodeHttp2Handler2.prototype.destroy = function() {
     var e_1, _a;
@@ -23971,7 +23918,7 @@ var NodeHttp2Handler = function() {
 }();
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/stream-collector/collector.js
-var import_stream2 = __toModule(require("stream"));
+var import_stream2 = require("stream");
 var Collector = function(_super) {
   __extends(Collector2, _super);
   function Collector2() {
@@ -24020,7 +23967,7 @@ function toBase64(input) {
 }
 
 // node_modules/@aws-sdk/util-body-length-node/dist-es/index.js
-var import_fs2 = __toModule(require("fs"));
+var import_fs2 = require("fs");
 function calculateBodyLength(body) {
   if (!body) {
     return 0;
@@ -24037,8 +23984,8 @@ function calculateBodyLength(body) {
 }
 
 // node_modules/@aws-sdk/util-user-agent-node/dist-es/index.js
-var import_os2 = __toModule(require("os"));
-var import_process = __toModule(require("process"));
+var import_os2 = require("os");
+var import_process = require("process");
 
 // node_modules/@aws-sdk/util-user-agent-node/dist-es/is-crt-available.js
 var isCrtAvailable = function() {
@@ -24241,6 +24188,15 @@ var regionHash = {
     ],
     signingRegion: "us-east-2"
   },
+  "us-gov-east-1": {
+    variants: [
+      {
+        hostname: "portal.sso.us-gov-east-1.amazonaws.com",
+        tags: []
+      }
+    ],
+    signingRegion: "us-gov-east-1"
+  },
   "us-gov-west-1": {
     variants: [
       {
@@ -24271,6 +24227,7 @@ var partitionHash = {
       "ap-south-1",
       "ap-southeast-1",
       "ap-southeast-2",
+      "ap-southeast-3",
       "ca-central-1",
       "eu-central-1",
       "eu-north-1",
@@ -24399,12 +24356,155 @@ var getRuntimeConfig = function(config) {
   };
 };
 
+// node_modules/@aws-sdk/util-defaults-mode-node/dist-es/constants.js
+var AWS_EXECUTION_ENV = "AWS_EXECUTION_ENV";
+var AWS_REGION_ENV = "AWS_REGION";
+var AWS_DEFAULT_REGION_ENV = "AWS_DEFAULT_REGION";
+var ENV_IMDS_DISABLED = "AWS_EC2_METADATA_DISABLED";
+var DEFAULTS_MODE_OPTIONS = ["in-region", "cross-region", "mobile", "standard", "legacy"];
+var IMDS_REGION_PATH = "/latest/meta-data/placement/region";
+
+// node_modules/@aws-sdk/util-defaults-mode-node/dist-es/defaultsModeConfig.js
+var AWS_DEFAULTS_MODE_ENV = "AWS_DEFAULTS_MODE";
+var AWS_DEFAULTS_MODE_CONFIG = "defaults_mode";
+var NODE_DEFAULTS_MODE_CONFIG_OPTIONS = {
+  environmentVariableSelector: function(env2) {
+    return env2[AWS_DEFAULTS_MODE_ENV];
+  },
+  configFileSelector: function(profile) {
+    return profile[AWS_DEFAULTS_MODE_CONFIG];
+  },
+  default: "legacy"
+};
+
+// node_modules/@aws-sdk/util-defaults-mode-node/dist-es/resolveDefaultsModeConfig.js
+var resolveDefaultsModeConfig = function(_a) {
+  var _b = _a === void 0 ? {} : _a, _c = _b.region, region = _c === void 0 ? loadConfig(NODE_REGION_CONFIG_OPTIONS) : _c, _d = _b.defaultsMode, defaultsMode = _d === void 0 ? loadConfig(NODE_DEFAULTS_MODE_CONFIG_OPTIONS) : _d;
+  return memoize(function() {
+    return __awaiter(void 0, void 0, void 0, function() {
+      var mode, _a2;
+      return __generator(this, function(_b2) {
+        switch (_b2.label) {
+          case 0:
+            if (!(typeof defaultsMode === "function"))
+              return [3, 2];
+            return [4, defaultsMode()];
+          case 1:
+            _a2 = _b2.sent();
+            return [3, 3];
+          case 2:
+            _a2 = defaultsMode;
+            _b2.label = 3;
+          case 3:
+            mode = _a2;
+            switch (mode === null || mode === void 0 ? void 0 : mode.toLowerCase()) {
+              case "auto":
+                return [2, resolveNodeDefaultsModeAuto(region)];
+              case "in-region":
+              case "cross-region":
+              case "mobile":
+              case "standard":
+              case "legacy":
+                return [2, Promise.resolve(mode === null || mode === void 0 ? void 0 : mode.toLocaleLowerCase())];
+              case void 0:
+                return [2, Promise.resolve("legacy")];
+              default:
+                throw new Error('Invalid parameter for "defaultsMode", expect ' + DEFAULTS_MODE_OPTIONS.join(", ") + ", got " + mode);
+            }
+            return [2];
+        }
+      });
+    });
+  });
+};
+var resolveNodeDefaultsModeAuto = function(clientRegion) {
+  return __awaiter(void 0, void 0, void 0, function() {
+    var resolvedRegion, _a, inferredRegion;
+    return __generator(this, function(_b) {
+      switch (_b.label) {
+        case 0:
+          if (!clientRegion)
+            return [3, 5];
+          if (!(typeof clientRegion === "function"))
+            return [3, 2];
+          return [4, clientRegion()];
+        case 1:
+          _a = _b.sent();
+          return [3, 3];
+        case 2:
+          _a = clientRegion;
+          _b.label = 3;
+        case 3:
+          resolvedRegion = _a;
+          return [4, inferPhysicalRegion()];
+        case 4:
+          inferredRegion = _b.sent();
+          if (!inferredRegion) {
+            return [2, "standard"];
+          }
+          if (resolvedRegion === inferredRegion) {
+            return [2, "in-region"];
+          } else {
+            return [2, "cross-region"];
+          }
+          _b.label = 5;
+        case 5:
+          return [2, "standard"];
+      }
+    });
+  });
+};
+var inferPhysicalRegion = function() {
+  return __awaiter(void 0, void 0, void 0, function() {
+    var endpoint, e_1;
+    var _a;
+    return __generator(this, function(_b) {
+      switch (_b.label) {
+        case 0:
+          if (process.env[AWS_EXECUTION_ENV] && (process.env[AWS_REGION_ENV] || process.env[AWS_DEFAULT_REGION_ENV])) {
+            return [2, (_a = process.env[AWS_REGION_ENV]) !== null && _a !== void 0 ? _a : process.env[AWS_DEFAULT_REGION_ENV]];
+          }
+          if (!!process.env[ENV_IMDS_DISABLED])
+            return [3, 5];
+          _b.label = 1;
+        case 1:
+          _b.trys.push([1, 4, , 5]);
+          return [4, getInstanceMetadataEndpoint()];
+        case 2:
+          endpoint = _b.sent();
+          return [4, httpRequest(__assign(__assign({}, endpoint), { path: IMDS_REGION_PATH }))];
+        case 3:
+          return [2, _b.sent().toString()];
+        case 4:
+          e_1 = _b.sent();
+          return [3, 5];
+        case 5:
+          return [2];
+      }
+    });
+  });
+};
+
 // node_modules/@aws-sdk/client-sso/dist-es/runtimeConfig.js
 var getRuntimeConfig2 = function(config) {
   var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
-  emitWarningIfUnsupportedVersion(process.version);
+  var defaultsMode = resolveDefaultsModeConfig(config);
+  var defaultConfigProvider = function() {
+    return defaultsMode().then(loadConfigsForDefaultMode);
+  };
   var clientSharedValues = getRuntimeConfig(config);
-  return __assign(__assign(__assign({}, clientSharedValues), config), { runtime: "node", base64Decoder: (_a = config === null || config === void 0 ? void 0 : config.base64Decoder) !== null && _a !== void 0 ? _a : fromBase64, base64Encoder: (_b = config === null || config === void 0 ? void 0 : config.base64Encoder) !== null && _b !== void 0 ? _b : toBase64, bodyLengthChecker: (_c = config === null || config === void 0 ? void 0 : config.bodyLengthChecker) !== null && _c !== void 0 ? _c : calculateBodyLength, defaultUserAgentProvider: (_d = config === null || config === void 0 ? void 0 : config.defaultUserAgentProvider) !== null && _d !== void 0 ? _d : defaultUserAgent({ serviceId: clientSharedValues.serviceId, clientVersion: package_default3.version }), maxAttempts: (_e = config === null || config === void 0 ? void 0 : config.maxAttempts) !== null && _e !== void 0 ? _e : loadConfig(NODE_MAX_ATTEMPT_CONFIG_OPTIONS), region: (_f = config === null || config === void 0 ? void 0 : config.region) !== null && _f !== void 0 ? _f : loadConfig(NODE_REGION_CONFIG_OPTIONS, NODE_REGION_CONFIG_FILE_OPTIONS), requestHandler: (_g = config === null || config === void 0 ? void 0 : config.requestHandler) !== null && _g !== void 0 ? _g : new NodeHttpHandler(), retryMode: (_h = config === null || config === void 0 ? void 0 : config.retryMode) !== null && _h !== void 0 ? _h : loadConfig(NODE_RETRY_MODE_CONFIG_OPTIONS), sha256: (_j = config === null || config === void 0 ? void 0 : config.sha256) !== null && _j !== void 0 ? _j : Hash.bind(null, "sha256"), streamCollector: (_k = config === null || config === void 0 ? void 0 : config.streamCollector) !== null && _k !== void 0 ? _k : streamCollector, useDualstackEndpoint: (_l = config === null || config === void 0 ? void 0 : config.useDualstackEndpoint) !== null && _l !== void 0 ? _l : loadConfig(NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS), useFipsEndpoint: (_m = config === null || config === void 0 ? void 0 : config.useFipsEndpoint) !== null && _m !== void 0 ? _m : loadConfig(NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS), utf8Decoder: (_o = config === null || config === void 0 ? void 0 : config.utf8Decoder) !== null && _o !== void 0 ? _o : fromUtf8, utf8Encoder: (_p = config === null || config === void 0 ? void 0 : config.utf8Encoder) !== null && _p !== void 0 ? _p : toUtf8 });
+  return __assign(__assign(__assign({}, clientSharedValues), config), { runtime: "node", defaultsMode, base64Decoder: (_a = config === null || config === void 0 ? void 0 : config.base64Decoder) !== null && _a !== void 0 ? _a : fromBase64, base64Encoder: (_b = config === null || config === void 0 ? void 0 : config.base64Encoder) !== null && _b !== void 0 ? _b : toBase64, bodyLengthChecker: (_c = config === null || config === void 0 ? void 0 : config.bodyLengthChecker) !== null && _c !== void 0 ? _c : calculateBodyLength, defaultUserAgentProvider: (_d = config === null || config === void 0 ? void 0 : config.defaultUserAgentProvider) !== null && _d !== void 0 ? _d : defaultUserAgent({ serviceId: clientSharedValues.serviceId, clientVersion: package_default3.version }), maxAttempts: (_e = config === null || config === void 0 ? void 0 : config.maxAttempts) !== null && _e !== void 0 ? _e : loadConfig(NODE_MAX_ATTEMPT_CONFIG_OPTIONS), region: (_f = config === null || config === void 0 ? void 0 : config.region) !== null && _f !== void 0 ? _f : loadConfig(NODE_REGION_CONFIG_OPTIONS, NODE_REGION_CONFIG_FILE_OPTIONS), requestHandler: (_g = config === null || config === void 0 ? void 0 : config.requestHandler) !== null && _g !== void 0 ? _g : new NodeHttpHandler(defaultConfigProvider), retryMode: (_h = config === null || config === void 0 ? void 0 : config.retryMode) !== null && _h !== void 0 ? _h : loadConfig(__assign(__assign({}, NODE_RETRY_MODE_CONFIG_OPTIONS), { default: function() {
+    return __awaiter(void 0, void 0, void 0, function() {
+      return __generator(this, function(_a2) {
+        switch (_a2.label) {
+          case 0:
+            return [4, defaultConfigProvider()];
+          case 1:
+            return [2, _a2.sent().retryMode || DEFAULT_RETRY_MODE];
+        }
+      });
+    });
+  } })), sha256: (_j = config === null || config === void 0 ? void 0 : config.sha256) !== null && _j !== void 0 ? _j : Hash.bind(null, "sha256"), streamCollector: (_k = config === null || config === void 0 ? void 0 : config.streamCollector) !== null && _k !== void 0 ? _k : streamCollector, useDualstackEndpoint: (_l = config === null || config === void 0 ? void 0 : config.useDualstackEndpoint) !== null && _l !== void 0 ? _l : loadConfig(NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS), useFipsEndpoint: (_m = config === null || config === void 0 ? void 0 : config.useFipsEndpoint) !== null && _m !== void 0 ? _m : loadConfig(NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS), utf8Decoder: (_o = config === null || config === void 0 ? void 0 : config.utf8Decoder) !== null && _o !== void 0 ? _o : fromUtf8, utf8Encoder: (_p = config === null || config === void 0 ? void 0 : config.utf8Encoder) !== null && _p !== void 0 ? _p : toUtf8 });
 };
 
 // node_modules/@aws-sdk/client-sso/dist-es/SSOClient.js
@@ -24456,9 +24556,9 @@ var getMasterProfileName = function(init) {
 };
 
 // node_modules/@aws-sdk/credential-provider-sso/dist-es/index.js
-var import_crypto2 = __toModule(require("crypto"));
-var import_fs3 = __toModule(require("fs"));
-var import_path2 = __toModule(require("path"));
+var import_crypto2 = require("crypto");
+var import_fs3 = require("fs");
+var import_path2 = require("path");
 var EXPIRE_WINDOW_MS = 15 * 60 * 1e3;
 var SHOULD_FAIL_CREDENTIAL_CHAIN = false;
 var fromSSO = function(init) {
@@ -24560,7 +24660,7 @@ var isSsoProfile = function(arg) {
 };
 
 // node_modules/@aws-sdk/credential-provider-web-identity/dist-es/fromTokenFile.js
-var import_fs4 = __toModule(require("fs"));
+var import_fs4 = require("fs");
 
 // node_modules/@aws-sdk/credential-provider-web-identity/dist-es/fromWebToken.js
 var fromWebToken = function(init) {
@@ -24738,7 +24838,7 @@ var resolveWebIdentityCredentials = function(profile, options) {
 };
 
 // node_modules/@aws-sdk/credential-provider-process/dist-es/index.js
-var import_child_process = __toModule(require("child_process"));
+var import_child_process = require("child_process");
 var fromProcess = function(init) {
   if (init === void 0) {
     init = {};
@@ -24829,7 +24929,7 @@ var execPromise = function(command) {
 };
 
 // node_modules/@aws-sdk/credential-provider-node/dist-es/index.js
-var ENV_IMDS_DISABLED = "AWS_EC2_METADATA_DISABLED";
+var ENV_IMDS_DISABLED2 = "AWS_EC2_METADATA_DISABLED";
 var defaultProvider = function(init) {
   if (init === void 0) {
     init = {};
@@ -24864,7 +24964,7 @@ var remoteProvider = function(init) {
   if (process.env[ENV_CMDS_RELATIVE_URI] || process.env[ENV_CMDS_FULL_URI]) {
     return fromContainerMetadata(init);
   }
-  if (process.env[ENV_IMDS_DISABLED]) {
+  if (process.env[ENV_IMDS_DISABLED2]) {
     return function() {
       return Promise.reject(new CredentialsProviderError("EC2 Instance Metadata Service access disabled"));
     };
@@ -24886,10 +24986,6 @@ var regionHash2 = {
   "us-east-1": {
     variants: [
       {
-        hostname: "sts.us-east-1.amazonaws.com",
-        tags: []
-      },
-      {
         hostname: "sts-fips.us-east-1.amazonaws.com",
         tags: ["fips"]
       }
@@ -24897,10 +24993,6 @@ var regionHash2 = {
   },
   "us-east-2": {
     variants: [
-      {
-        hostname: "sts.us-east-2.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "sts-fips.us-east-2.amazonaws.com",
         tags: ["fips"]
@@ -24911,20 +25003,12 @@ var regionHash2 = {
     variants: [
       {
         hostname: "sts.us-gov-east-1.amazonaws.com",
-        tags: []
-      },
-      {
-        hostname: "sts.us-gov-east-1.amazonaws.com",
         tags: ["fips"]
       }
     ]
   },
   "us-gov-west-1": {
     variants: [
-      {
-        hostname: "sts.us-gov-west-1.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "sts.us-gov-west-1.amazonaws.com",
         tags: ["fips"]
@@ -24934,10 +25018,6 @@ var regionHash2 = {
   "us-west-1": {
     variants: [
       {
-        hostname: "sts.us-west-1.amazonaws.com",
-        tags: []
-      },
-      {
         hostname: "sts-fips.us-west-1.amazonaws.com",
         tags: ["fips"]
       }
@@ -24945,10 +25025,6 @@ var regionHash2 = {
   },
   "us-west-2": {
     variants: [
-      {
-        hostname: "sts.us-west-2.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "sts-fips.us-west-2.amazonaws.com",
         tags: ["fips"]
@@ -24967,6 +25043,7 @@ var partitionHash2 = {
       "ap-south-1",
       "ap-southeast-1",
       "ap-southeast-2",
+      "ap-southeast-3",
       "aws-global",
       "ca-central-1",
       "eu-central-1",
@@ -25067,6 +25144,14 @@ var partitionHash2 = {
       {
         hostname: "sts.{region}.amazonaws.com",
         tags: ["fips"]
+      },
+      {
+        hostname: "sts-fips.{region}.api.aws",
+        tags: ["dualstack", "fips"]
+      },
+      {
+        hostname: "sts.{region}.api.aws",
+        tags: ["dualstack"]
       }
     ]
   }
@@ -25095,9 +25180,23 @@ var getRuntimeConfig3 = function(config) {
 // node_modules/@aws-sdk/client-sts/dist-es/runtimeConfig.js
 var getRuntimeConfig4 = function(config) {
   var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
-  emitWarningIfUnsupportedVersion(process.version);
+  var defaultsMode = resolveDefaultsModeConfig(config);
+  var defaultConfigProvider = function() {
+    return defaultsMode().then(loadConfigsForDefaultMode);
+  };
   var clientSharedValues = getRuntimeConfig3(config);
-  return __assign(__assign(__assign({}, clientSharedValues), config), { runtime: "node", base64Decoder: (_a = config === null || config === void 0 ? void 0 : config.base64Decoder) !== null && _a !== void 0 ? _a : fromBase64, base64Encoder: (_b = config === null || config === void 0 ? void 0 : config.base64Encoder) !== null && _b !== void 0 ? _b : toBase64, bodyLengthChecker: (_c = config === null || config === void 0 ? void 0 : config.bodyLengthChecker) !== null && _c !== void 0 ? _c : calculateBodyLength, credentialDefaultProvider: (_d = config === null || config === void 0 ? void 0 : config.credentialDefaultProvider) !== null && _d !== void 0 ? _d : decorateDefaultCredentialProvider(defaultProvider), defaultUserAgentProvider: (_e = config === null || config === void 0 ? void 0 : config.defaultUserAgentProvider) !== null && _e !== void 0 ? _e : defaultUserAgent({ serviceId: clientSharedValues.serviceId, clientVersion: package_default2.version }), maxAttempts: (_f = config === null || config === void 0 ? void 0 : config.maxAttempts) !== null && _f !== void 0 ? _f : loadConfig(NODE_MAX_ATTEMPT_CONFIG_OPTIONS), region: (_g = config === null || config === void 0 ? void 0 : config.region) !== null && _g !== void 0 ? _g : loadConfig(NODE_REGION_CONFIG_OPTIONS, NODE_REGION_CONFIG_FILE_OPTIONS), requestHandler: (_h = config === null || config === void 0 ? void 0 : config.requestHandler) !== null && _h !== void 0 ? _h : new NodeHttpHandler(), retryMode: (_j = config === null || config === void 0 ? void 0 : config.retryMode) !== null && _j !== void 0 ? _j : loadConfig(NODE_RETRY_MODE_CONFIG_OPTIONS), sha256: (_k = config === null || config === void 0 ? void 0 : config.sha256) !== null && _k !== void 0 ? _k : Hash.bind(null, "sha256"), streamCollector: (_l = config === null || config === void 0 ? void 0 : config.streamCollector) !== null && _l !== void 0 ? _l : streamCollector, useDualstackEndpoint: (_m = config === null || config === void 0 ? void 0 : config.useDualstackEndpoint) !== null && _m !== void 0 ? _m : loadConfig(NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS), useFipsEndpoint: (_o = config === null || config === void 0 ? void 0 : config.useFipsEndpoint) !== null && _o !== void 0 ? _o : loadConfig(NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS), utf8Decoder: (_p = config === null || config === void 0 ? void 0 : config.utf8Decoder) !== null && _p !== void 0 ? _p : fromUtf8, utf8Encoder: (_q = config === null || config === void 0 ? void 0 : config.utf8Encoder) !== null && _q !== void 0 ? _q : toUtf8 });
+  return __assign(__assign(__assign({}, clientSharedValues), config), { runtime: "node", defaultsMode, base64Decoder: (_a = config === null || config === void 0 ? void 0 : config.base64Decoder) !== null && _a !== void 0 ? _a : fromBase64, base64Encoder: (_b = config === null || config === void 0 ? void 0 : config.base64Encoder) !== null && _b !== void 0 ? _b : toBase64, bodyLengthChecker: (_c = config === null || config === void 0 ? void 0 : config.bodyLengthChecker) !== null && _c !== void 0 ? _c : calculateBodyLength, credentialDefaultProvider: (_d = config === null || config === void 0 ? void 0 : config.credentialDefaultProvider) !== null && _d !== void 0 ? _d : decorateDefaultCredentialProvider(defaultProvider), defaultUserAgentProvider: (_e = config === null || config === void 0 ? void 0 : config.defaultUserAgentProvider) !== null && _e !== void 0 ? _e : defaultUserAgent({ serviceId: clientSharedValues.serviceId, clientVersion: package_default2.version }), maxAttempts: (_f = config === null || config === void 0 ? void 0 : config.maxAttempts) !== null && _f !== void 0 ? _f : loadConfig(NODE_MAX_ATTEMPT_CONFIG_OPTIONS), region: (_g = config === null || config === void 0 ? void 0 : config.region) !== null && _g !== void 0 ? _g : loadConfig(NODE_REGION_CONFIG_OPTIONS, NODE_REGION_CONFIG_FILE_OPTIONS), requestHandler: (_h = config === null || config === void 0 ? void 0 : config.requestHandler) !== null && _h !== void 0 ? _h : new NodeHttpHandler(defaultConfigProvider), retryMode: (_j = config === null || config === void 0 ? void 0 : config.retryMode) !== null && _j !== void 0 ? _j : loadConfig(__assign(__assign({}, NODE_RETRY_MODE_CONFIG_OPTIONS), { default: function() {
+    return __awaiter(void 0, void 0, void 0, function() {
+      return __generator(this, function(_a2) {
+        switch (_a2.label) {
+          case 0:
+            return [4, defaultConfigProvider()];
+          case 1:
+            return [2, _a2.sent().retryMode || DEFAULT_RETRY_MODE];
+        }
+      });
+    });
+  } })), sha256: (_k = config === null || config === void 0 ? void 0 : config.sha256) !== null && _k !== void 0 ? _k : Hash.bind(null, "sha256"), streamCollector: (_l = config === null || config === void 0 ? void 0 : config.streamCollector) !== null && _l !== void 0 ? _l : streamCollector, useDualstackEndpoint: (_m = config === null || config === void 0 ? void 0 : config.useDualstackEndpoint) !== null && _m !== void 0 ? _m : loadConfig(NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS), useFipsEndpoint: (_o = config === null || config === void 0 ? void 0 : config.useFipsEndpoint) !== null && _o !== void 0 ? _o : loadConfig(NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS), utf8Decoder: (_p = config === null || config === void 0 ? void 0 : config.utf8Decoder) !== null && _p !== void 0 ? _p : fromUtf8, utf8Encoder: (_q = config === null || config === void 0 ? void 0 : config.utf8Encoder) !== null && _q !== void 0 ? _q : toUtf8 });
 };
 
 // node_modules/@aws-sdk/client-sts/dist-es/STSClient.js
@@ -25147,7 +25246,7 @@ var decorateDefaultCredentialProvider2 = function(provider) {
 };
 
 // node_modules/@aws-sdk/eventstream-marshaller/dist-es/EventStreamMarshaller.js
-var import_crc322 = __toModule(require_build2());
+var import_crc322 = __toESM(require_build2());
 
 // node_modules/@aws-sdk/eventstream-marshaller/dist-es/Int64.js
 var Int64 = function() {
@@ -25407,7 +25506,7 @@ var UUID_TAG = "uuid";
 var UUID_PATTERN = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
 
 // node_modules/@aws-sdk/eventstream-marshaller/dist-es/splitMessage.js
-var import_crc32 = __toModule(require_build2());
+var import_crc32 = __toESM(require_build2());
 var PRELUDE_MEMBER_LENGTH = 4;
 var PRELUDE_LENGTH = PRELUDE_MEMBER_LENGTH * 2;
 var CHECKSUM_LENGTH = 4;
@@ -25745,7 +25844,7 @@ var EventStreamMarshaller2 = function() {
 }();
 
 // node_modules/@aws-sdk/eventstream-serde-node/dist-es/EventStreamMarshaller.js
-var import_stream3 = __toModule(require("stream"));
+var import_stream3 = require("stream");
 
 // node_modules/@aws-sdk/eventstream-serde-node/dist-es/utils.js
 function readabletoIterable(readStream) {
@@ -25859,11 +25958,11 @@ var eventStreamSerdeProvider = function(options) {
   return new EventStreamMarshaller3(options);
 };
 
-// node_modules/@aws-sdk/hash-stream-node/dist-es/index.js
-var import_fs5 = __toModule(require("fs"));
+// node_modules/@aws-sdk/hash-stream-node/dist-es/fileStreamHasher.js
+var import_fs5 = require("fs");
 
-// node_modules/@aws-sdk/hash-stream-node/dist-es/hash-calculator.js
-var import_stream4 = __toModule(require("stream"));
+// node_modules/@aws-sdk/hash-stream-node/dist-es/HashCalculator.js
+var import_stream4 = require("stream");
 var HashCalculator = function(_super) {
   __extends(HashCalculator2, _super);
   function HashCalculator2(hash, options) {
@@ -25882,8 +25981,8 @@ var HashCalculator = function(_super) {
   return HashCalculator2;
 }(import_stream4.Writable);
 
-// node_modules/@aws-sdk/hash-stream-node/dist-es/index.js
-var fileStreamHasher = function fileStreamHasher2(hashCtor, fileStream) {
+// node_modules/@aws-sdk/hash-stream-node/dist-es/fileStreamHasher.js
+var fileStreamHasher = function(hashCtor, fileStream) {
   return new Promise(function(resolve, reject) {
     if (!isReadStream(fileStream)) {
       reject(new Error("Unable to calculate hash for non-file streams."));
@@ -25906,18 +26005,14 @@ var fileStreamHasher = function fileStreamHasher2(hashCtor, fileStream) {
     });
   });
 };
-function isReadStream(stream) {
+var isReadStream = function(stream) {
   return typeof stream.path === "string";
-}
+};
 
 // node_modules/@aws-sdk/client-s3/dist-es/endpoints.js
 var regionHash3 = {
   "af-south-1": {
     variants: [
-      {
-        hostname: "s3.af-south-1.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "s3.dualstack.af-south-1.amazonaws.com",
         tags: ["dualstack"]
@@ -25926,10 +26021,6 @@ var regionHash3 = {
   },
   "ap-east-1": {
     variants: [
-      {
-        hostname: "s3.ap-east-1.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "s3.dualstack.ap-east-1.amazonaws.com",
         tags: ["dualstack"]
@@ -25951,10 +26042,6 @@ var regionHash3 = {
   "ap-northeast-2": {
     variants: [
       {
-        hostname: "s3.ap-northeast-2.amazonaws.com",
-        tags: []
-      },
-      {
         hostname: "s3.dualstack.ap-northeast-2.amazonaws.com",
         tags: ["dualstack"]
       }
@@ -25963,10 +26050,6 @@ var regionHash3 = {
   "ap-northeast-3": {
     variants: [
       {
-        hostname: "s3.ap-northeast-3.amazonaws.com",
-        tags: []
-      },
-      {
         hostname: "s3.dualstack.ap-northeast-3.amazonaws.com",
         tags: ["dualstack"]
       }
@@ -25974,10 +26057,6 @@ var regionHash3 = {
   },
   "ap-south-1": {
     variants: [
-      {
-        hostname: "s3.ap-south-1.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "s3.dualstack.ap-south-1.amazonaws.com",
         tags: ["dualstack"]
@@ -26008,6 +26087,14 @@ var regionHash3 = {
       }
     ]
   },
+  "ap-southeast-3": {
+    variants: [
+      {
+        hostname: "s3.dualstack.ap-southeast-3.amazonaws.com",
+        tags: ["dualstack"]
+      }
+    ]
+  },
   "aws-global": {
     variants: [
       {
@@ -26019,10 +26106,6 @@ var regionHash3 = {
   },
   "ca-central-1": {
     variants: [
-      {
-        hostname: "s3.ca-central-1.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "s3-fips.ca-central-1.amazonaws.com",
         tags: ["fips"]
@@ -26040,10 +26123,6 @@ var regionHash3 = {
   "cn-north-1": {
     variants: [
       {
-        hostname: "s3.cn-north-1.amazonaws.com.cn",
-        tags: []
-      },
-      {
         hostname: "s3.dualstack.cn-north-1.amazonaws.com.cn",
         tags: ["dualstack"]
       }
@@ -26051,10 +26130,6 @@ var regionHash3 = {
   },
   "cn-northwest-1": {
     variants: [
-      {
-        hostname: "s3.cn-northwest-1.amazonaws.com.cn",
-        tags: []
-      },
       {
         hostname: "s3.dualstack.cn-northwest-1.amazonaws.com.cn",
         tags: ["dualstack"]
@@ -26064,10 +26139,6 @@ var regionHash3 = {
   "eu-central-1": {
     variants: [
       {
-        hostname: "s3.eu-central-1.amazonaws.com",
-        tags: []
-      },
-      {
         hostname: "s3.dualstack.eu-central-1.amazonaws.com",
         tags: ["dualstack"]
       }
@@ -26076,10 +26147,6 @@ var regionHash3 = {
   "eu-north-1": {
     variants: [
       {
-        hostname: "s3.eu-north-1.amazonaws.com",
-        tags: []
-      },
-      {
         hostname: "s3.dualstack.eu-north-1.amazonaws.com",
         tags: ["dualstack"]
       }
@@ -26087,10 +26154,6 @@ var regionHash3 = {
   },
   "eu-south-1": {
     variants: [
-      {
-        hostname: "s3.eu-south-1.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "s3.dualstack.eu-south-1.amazonaws.com",
         tags: ["dualstack"]
@@ -26112,10 +26175,6 @@ var regionHash3 = {
   "eu-west-2": {
     variants: [
       {
-        hostname: "s3.eu-west-2.amazonaws.com",
-        tags: []
-      },
-      {
         hostname: "s3.dualstack.eu-west-2.amazonaws.com",
         tags: ["dualstack"]
       }
@@ -26124,10 +26183,6 @@ var regionHash3 = {
   "eu-west-3": {
     variants: [
       {
-        hostname: "s3.eu-west-3.amazonaws.com",
-        tags: []
-      },
-      {
         hostname: "s3.dualstack.eu-west-3.amazonaws.com",
         tags: ["dualstack"]
       }
@@ -26135,10 +26190,6 @@ var regionHash3 = {
   },
   "me-south-1": {
     variants: [
-      {
-        hostname: "s3.me-south-1.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "s3.dualstack.me-south-1.amazonaws.com",
         tags: ["dualstack"]
@@ -26188,10 +26239,6 @@ var regionHash3 = {
   },
   "us-east-2": {
     variants: [
-      {
-        hostname: "s3.us-east-2.amazonaws.com",
-        tags: []
-      },
       {
         hostname: "s3-fips.dualstack.us-east-2.amazonaws.com",
         tags: ["dualstack", "fips"]
@@ -26290,6 +26337,7 @@ var partitionHash3 = {
       "ap-south-1",
       "ap-southeast-1",
       "ap-southeast-2",
+      "ap-southeast-3",
       "aws-global",
       "ca-central-1",
       "eu-central-1",
@@ -26318,6 +26366,10 @@ var partitionHash3 = {
         tags: []
       },
       {
+        hostname: "s3-fips.{region}.amazonaws.com",
+        tags: ["fips"]
+      },
+      {
         hostname: "s3-fips.dualstack.{region}.amazonaws.com",
         tags: ["dualstack", "fips"]
       },
@@ -26334,6 +26386,14 @@ var partitionHash3 = {
       {
         hostname: "s3.{region}.amazonaws.com.cn",
         tags: []
+      },
+      {
+        hostname: "s3-fips.{region}.amazonaws.com.cn",
+        tags: ["fips"]
+      },
+      {
+        hostname: "s3-fips.{region}.api.amazonwebservices.com.cn",
+        tags: ["dualstack", "fips"]
       },
       {
         hostname: "s3.dualstack.{region}.amazonaws.com.cn",
@@ -26378,6 +26438,10 @@ var partitionHash3 = {
         tags: []
       },
       {
+        hostname: "s3-fips.{region}.amazonaws.com",
+        tags: ["fips"]
+      },
+      {
         hostname: "s3-fips.dualstack.{region}.amazonaws.com",
         tags: ["dualstack", "fips"]
       },
@@ -26415,9 +26479,23 @@ var getRuntimeConfig5 = function(config) {
 // node_modules/@aws-sdk/client-s3/dist-es/runtimeConfig.js
 var getRuntimeConfig6 = function(config) {
   var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
-  emitWarningIfUnsupportedVersion(process.version);
+  var defaultsMode = resolveDefaultsModeConfig(config);
+  var defaultConfigProvider = function() {
+    return defaultsMode().then(loadConfigsForDefaultMode);
+  };
   var clientSharedValues = getRuntimeConfig5(config);
-  return __assign(__assign(__assign({}, clientSharedValues), config), { runtime: "node", base64Decoder: (_a = config === null || config === void 0 ? void 0 : config.base64Decoder) !== null && _a !== void 0 ? _a : fromBase64, base64Encoder: (_b = config === null || config === void 0 ? void 0 : config.base64Encoder) !== null && _b !== void 0 ? _b : toBase64, bodyLengthChecker: (_c = config === null || config === void 0 ? void 0 : config.bodyLengthChecker) !== null && _c !== void 0 ? _c : calculateBodyLength, credentialDefaultProvider: (_d = config === null || config === void 0 ? void 0 : config.credentialDefaultProvider) !== null && _d !== void 0 ? _d : decorateDefaultCredentialProvider2(defaultProvider), defaultUserAgentProvider: (_e = config === null || config === void 0 ? void 0 : config.defaultUserAgentProvider) !== null && _e !== void 0 ? _e : defaultUserAgent({ serviceId: clientSharedValues.serviceId, clientVersion: package_default.version }), eventStreamSerdeProvider: (_f = config === null || config === void 0 ? void 0 : config.eventStreamSerdeProvider) !== null && _f !== void 0 ? _f : eventStreamSerdeProvider, maxAttempts: (_g = config === null || config === void 0 ? void 0 : config.maxAttempts) !== null && _g !== void 0 ? _g : loadConfig(NODE_MAX_ATTEMPT_CONFIG_OPTIONS), md5: (_h = config === null || config === void 0 ? void 0 : config.md5) !== null && _h !== void 0 ? _h : Hash.bind(null, "md5"), region: (_j = config === null || config === void 0 ? void 0 : config.region) !== null && _j !== void 0 ? _j : loadConfig(NODE_REGION_CONFIG_OPTIONS, NODE_REGION_CONFIG_FILE_OPTIONS), requestHandler: (_k = config === null || config === void 0 ? void 0 : config.requestHandler) !== null && _k !== void 0 ? _k : new NodeHttpHandler(), retryMode: (_l = config === null || config === void 0 ? void 0 : config.retryMode) !== null && _l !== void 0 ? _l : loadConfig(NODE_RETRY_MODE_CONFIG_OPTIONS), sha256: (_m = config === null || config === void 0 ? void 0 : config.sha256) !== null && _m !== void 0 ? _m : Hash.bind(null, "sha256"), streamCollector: (_o = config === null || config === void 0 ? void 0 : config.streamCollector) !== null && _o !== void 0 ? _o : streamCollector, streamHasher: (_p = config === null || config === void 0 ? void 0 : config.streamHasher) !== null && _p !== void 0 ? _p : fileStreamHasher, useArnRegion: (_q = config === null || config === void 0 ? void 0 : config.useArnRegion) !== null && _q !== void 0 ? _q : loadConfig(NODE_USE_ARN_REGION_CONFIG_OPTIONS), useDualstackEndpoint: (_r = config === null || config === void 0 ? void 0 : config.useDualstackEndpoint) !== null && _r !== void 0 ? _r : loadConfig(NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS), useFipsEndpoint: (_s = config === null || config === void 0 ? void 0 : config.useFipsEndpoint) !== null && _s !== void 0 ? _s : loadConfig(NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS), utf8Decoder: (_t = config === null || config === void 0 ? void 0 : config.utf8Decoder) !== null && _t !== void 0 ? _t : fromUtf8, utf8Encoder: (_u = config === null || config === void 0 ? void 0 : config.utf8Encoder) !== null && _u !== void 0 ? _u : toUtf8 });
+  return __assign(__assign(__assign({}, clientSharedValues), config), { runtime: "node", defaultsMode, base64Decoder: (_a = config === null || config === void 0 ? void 0 : config.base64Decoder) !== null && _a !== void 0 ? _a : fromBase64, base64Encoder: (_b = config === null || config === void 0 ? void 0 : config.base64Encoder) !== null && _b !== void 0 ? _b : toBase64, bodyLengthChecker: (_c = config === null || config === void 0 ? void 0 : config.bodyLengthChecker) !== null && _c !== void 0 ? _c : calculateBodyLength, credentialDefaultProvider: (_d = config === null || config === void 0 ? void 0 : config.credentialDefaultProvider) !== null && _d !== void 0 ? _d : decorateDefaultCredentialProvider2(defaultProvider), defaultUserAgentProvider: (_e = config === null || config === void 0 ? void 0 : config.defaultUserAgentProvider) !== null && _e !== void 0 ? _e : defaultUserAgent({ serviceId: clientSharedValues.serviceId, clientVersion: package_default.version }), eventStreamSerdeProvider: (_f = config === null || config === void 0 ? void 0 : config.eventStreamSerdeProvider) !== null && _f !== void 0 ? _f : eventStreamSerdeProvider, maxAttempts: (_g = config === null || config === void 0 ? void 0 : config.maxAttempts) !== null && _g !== void 0 ? _g : loadConfig(NODE_MAX_ATTEMPT_CONFIG_OPTIONS), md5: (_h = config === null || config === void 0 ? void 0 : config.md5) !== null && _h !== void 0 ? _h : Hash.bind(null, "md5"), region: (_j = config === null || config === void 0 ? void 0 : config.region) !== null && _j !== void 0 ? _j : loadConfig(NODE_REGION_CONFIG_OPTIONS, NODE_REGION_CONFIG_FILE_OPTIONS), requestHandler: (_k = config === null || config === void 0 ? void 0 : config.requestHandler) !== null && _k !== void 0 ? _k : new NodeHttpHandler(defaultConfigProvider), retryMode: (_l = config === null || config === void 0 ? void 0 : config.retryMode) !== null && _l !== void 0 ? _l : loadConfig(__assign(__assign({}, NODE_RETRY_MODE_CONFIG_OPTIONS), { default: function() {
+    return __awaiter(void 0, void 0, void 0, function() {
+      return __generator(this, function(_a2) {
+        switch (_a2.label) {
+          case 0:
+            return [4, defaultConfigProvider()];
+          case 1:
+            return [2, _a2.sent().retryMode || DEFAULT_RETRY_MODE];
+        }
+      });
+    });
+  } })), sha256: (_m = config === null || config === void 0 ? void 0 : config.sha256) !== null && _m !== void 0 ? _m : Hash.bind(null, "sha256"), streamCollector: (_o = config === null || config === void 0 ? void 0 : config.streamCollector) !== null && _o !== void 0 ? _o : streamCollector, streamHasher: (_p = config === null || config === void 0 ? void 0 : config.streamHasher) !== null && _p !== void 0 ? _p : fileStreamHasher, useArnRegion: (_q = config === null || config === void 0 ? void 0 : config.useArnRegion) !== null && _q !== void 0 ? _q : loadConfig(NODE_USE_ARN_REGION_CONFIG_OPTIONS), useDualstackEndpoint: (_r = config === null || config === void 0 ? void 0 : config.useDualstackEndpoint) !== null && _r !== void 0 ? _r : loadConfig(NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS), useFipsEndpoint: (_s = config === null || config === void 0 ? void 0 : config.useFipsEndpoint) !== null && _s !== void 0 ? _s : loadConfig(NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS), utf8Decoder: (_t = config === null || config === void 0 ? void 0 : config.utf8Decoder) !== null && _t !== void 0 ? _t : fromUtf8, utf8Encoder: (_u = config === null || config === void 0 ? void 0 : config.utf8Encoder) !== null && _u !== void 0 ? _u : toUtf8 });
 };
 
 // node_modules/@aws-sdk/client-s3/dist-es/S3Client.js
@@ -26454,25 +26532,23 @@ var S3Client = function(_super) {
 }(Client);
 
 // src/uploadFiles.ts
-var import_fs6 = __toModule(require("fs"));
-var import_path3 = __toModule(require("path"));
-var entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
+var import_fs6 = require("fs");
+var import_path3 = __toESM(require("path"), 1);
 async function uploadFiles({ files: files4, sourceDir, storageService, hostingConfig }) {
   const fileInfos = files4.map((file) => ({
-    isEntrypoint: entryPointFileNames.includes(import_path3.default.basename(file)),
+    config: hostingConfig.files.find((x) => x.path === import_path3.default.relative(sourceDir, file)),
     file
   }));
-  async function uploadFile(file) {
+  async function uploadFile({ file, config }) {
     const key = import_path3.default.relative(sourceDir, file);
-    const fileConfig = hostingConfig.files.find((x) => x.path === key);
     await storageService.uploadFile(__spreadValues({
       key,
       body: await import_fs6.promises.readFile(file)
-    }, fileConfig ? getS3ObjectParams(fileConfig.headers) : {}));
+    }, config ? getS3ObjectParams(config.headers) : {}));
   }
-  const nonEntrypoints = fileInfos.filter(({ isEntrypoint }) => !isEntrypoint).map(({ file }) => file);
+  const nonEntrypoints = fileInfos.filter(({ config }) => !(config == null ? void 0 : config.isEntrypoint));
   await Promise.all(nonEntrypoints.map(uploadFile));
-  const entrypoints = fileInfos.filter(({ isEntrypoint }) => isEntrypoint).map(({ file }) => file);
+  const entrypoints = fileInfos.filter(({ config }) => config == null ? void 0 : config.isEntrypoint);
   await Promise.all(entrypoints.map(uploadFile));
 }
 function getS3ObjectParams(headers) {
@@ -26545,8 +26621,8 @@ function calculateChanges({
   const now = Date.now();
   const isExpiredFile = ({ obsoleteSince }) => obsoleteSince !== null && differenceInCalendarDays(now, new Date(obsoleteSince)) > maxDays;
   const filesToDelete = lastDeploymentLog.filter(isExpiredFile).map(({ path: path3 }) => path3);
-  const newDeploymentLogMap = new Map();
-  lastDeploymentLog.filter((x) => !isExpiredFile(x)).forEach(({ path: path3, obsoleteSince }) => newDeploymentLogMap.set(path3, obsoleteSince != null ? obsoleteSince : new Date(now).toISOString()));
+  const newDeploymentLogMap = /* @__PURE__ */ new Map();
+  lastDeploymentLog.filter((x) => !isExpiredFile(x)).forEach(({ path: path3, obsoleteSince }) => newDeploymentLogMap.set(path3, obsoleteSince ?? new Date(now).toISOString()));
   files4.forEach((path3) => newDeploymentLogMap.set(path3, null));
   return {
     newDeploymentLog: Array.from(newDeploymentLogMap.entries()).map(([path3, obsoleteSince]) => ({
@@ -26558,8 +26634,8 @@ function calculateChanges({
 }
 
 // src/getSourceFiles.ts
-var glob = __toModule(require_glob());
-var import_path4 = __toModule(require("path"));
+var glob = __toESM(require_glob(), 1);
+var import_path4 = __toESM(require("path"), 1);
 async function getSourceFiles({ sourceDir }) {
   const globber = await glob.create(import_path4.default.join(sourceDir, "**"), {
     matchDirectories: false
@@ -26587,7 +26663,7 @@ async function deployAssets({
     console.log("Last deployment log not found.");
   }
   const { filesToDelete, newDeploymentLog } = calculateChanges({
-    lastDeploymentLog: lastDeploymentLog != null ? lastDeploymentLog : [],
+    lastDeploymentLog: lastDeploymentLog ?? [],
     files: files4,
     maxDays
   });
@@ -26603,7 +26679,7 @@ async function deployAssets({
 }
 
 // src/StorageService.ts
-var import_mime_types = __toModule(require_mime_types());
+var import_mime_types = __toESM(require_mime_types(), 1);
 function createS3StorageService({ s3Client, bucket }) {
   return {
     async downloadFileAsString(key) {
@@ -26649,16 +26725,23 @@ async function readableToString(readable) {
 }
 
 // src/action.ts
-var import_fs7 = __toModule(require("fs"));
-var import_fs8 = __toModule(require("fs"));
+var import_fs7 = require("fs");
+var import_fs8 = require("fs");
+var entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
+var defaultHostingConfig = {
+  files: entryPointFileNames.map((path3) => ({
+    path: path3,
+    headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }],
+    isEntrypoint: true
+  }))
+};
 async function action({ sourceDir, bucket, maxDays }) {
-  var _a;
   const s3Client = new S3Client({});
   const storageService = createS3StorageService({
     s3Client,
     bucket
   });
-  const hostingConfig = (_a = await readHostingConfig()) != null ? _a : { files: [] };
+  const hostingConfig = await readHostingConfig() ?? defaultHostingConfig;
   await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
 }
 var fileExists = (file) => import_fs8.promises.access(file, import_fs7.constants.R_OK).then(() => true).catch(() => false);
@@ -26688,8 +26771,9 @@ function getActionParams() {
 }
 action(getActionParams()).catch((error) => {
   console.error(error);
-  import_core.default.setFailed(error.message);
+  import_core.default.setFailed(error instanceof Error ? error.message : "Some error occurred");
 });
+module.exports = __toCommonJS(src_exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   getActionParams

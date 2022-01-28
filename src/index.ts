@@ -19,5 +19,5 @@ export function getActionParams() {
 
 action(getActionParams()).catch((error) => {
   console.error(error);
-  core.setFailed(error.message);
+  core.setFailed(error instanceof Error ? error.message : "Some error occurred");
 });
