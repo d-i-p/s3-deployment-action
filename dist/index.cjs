@@ -22,17 +22,10 @@ var __spreadValues = (a, b) => {
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined")
-    return require.apply(this, arguments);
-  throw new Error('Dynamic require of "' + x + '" is not supported');
-});
 var __esm = (fn, res) => function __init() {
   return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
 };
-var __commonJS = (cb, mod) => function __require2() {
+var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var __export = (target, all) => {
@@ -122,7 +115,7 @@ var require_command = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.issue = exports.issueCommand = void 0;
-    var os = __importStar2(__require("os"));
+    var os = __importStar2(require("os"));
     var utils_1 = require_utils();
     function issueCommand(command, properties, message) {
       const cmd = new Command2(command, properties, message);
@@ -209,8 +202,8 @@ var require_file_command = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.issueCommand = void 0;
-    var fs3 = __importStar2(__require("fs"));
-    var os = __importStar2(__require("os"));
+    var fs3 = __importStar2(require("fs"));
+    var os = __importStar2(require("os"));
     var utils_1 = require_utils();
     function issueCommand(command, message) {
       const filePath = process.env[`GITHUB_${command}`];
@@ -286,13 +279,13 @@ var require_proxy = __commonJS({
 var require_tunnel = __commonJS({
   "node_modules/tunnel/lib/tunnel.js"(exports) {
     "use strict";
-    var net = __require("net");
-    var tls = __require("tls");
-    var http = __require("http");
-    var https = __require("https");
-    var events = __require("events");
-    var assert = __require("assert");
-    var util = __require("util");
+    var net = require("net");
+    var tls = require("tls");
+    var http = require("http");
+    var https = require("https");
+    var events = require("events");
+    var assert = require("assert");
+    var util = require("util");
     exports.httpOverHttp = httpOverHttp;
     exports.httpsOverHttp = httpsOverHttp;
     exports.httpOverHttps = httpOverHttps;
@@ -517,8 +510,8 @@ var require_http_client = __commonJS({
   "node_modules/@actions/http-client/index.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var http = __require("http");
-    var https = __require("https");
+    var http = require("http");
+    var https = require("https");
     var pm = require_proxy();
     var tunnel;
     var HttpCodes;
@@ -1191,8 +1184,8 @@ var require_core = __commonJS({
     var command_1 = require_command();
     var file_command_1 = require_file_command();
     var utils_1 = require_utils();
-    var os = __importStar2(__require("os"));
-    var path3 = __importStar2(__require("path"));
+    var os = __importStar2(require("os"));
+    var path3 = __importStar2(require("path"));
     var oidc_utils_1 = require_oidc_utils();
     var ExitCode;
     (function(ExitCode2) {
@@ -3181,7 +3174,7 @@ var require_rng = __commonJS({
       value: true
     });
     exports.default = rng;
-    var _crypto = _interopRequireDefault(__require("crypto"));
+    var _crypto = _interopRequireDefault(require("crypto"));
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : { default: obj };
     }
@@ -3440,7 +3433,7 @@ var require_md5 = __commonJS({
       value: true
     });
     exports.default = void 0;
-    var _crypto = _interopRequireDefault(__require("crypto"));
+    var _crypto = _interopRequireDefault(require("crypto"));
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : { default: obj };
     }
@@ -3516,7 +3509,7 @@ var require_sha1 = __commonJS({
       value: true
     });
     exports.default = void 0;
-    var _crypto = _interopRequireDefault(__require("crypto"));
+    var _crypto = _interopRequireDefault(require("crypto"));
     function _interopRequireDefault(obj) {
       return obj && obj.__esModule ? obj : { default: obj };
     }
@@ -4688,8 +4681,8 @@ var require_internal_path_helper = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.safeTrimTrailingSeparator = exports.normalizeSeparators = exports.hasRoot = exports.hasAbsoluteRoot = exports.ensureAbsoluteRoot = exports.dirname = void 0;
-    var path3 = __importStar2(__require("path"));
-    var assert_1 = __importDefault2(__require("assert"));
+    var path3 = __importStar2(require("path"));
+    var assert_1 = __importDefault2(require("assert"));
     var IS_WINDOWS = process.platform === "win32";
     function dirname(p) {
       p = safeTrimTrailingSeparator(p);
@@ -5123,7 +5116,7 @@ var require_minimatch = __commonJS({
     minimatch.Minimatch = Minimatch;
     var path3 = { sep: "/" };
     try {
-      path3 = __require("path");
+      path3 = require("path");
     } catch (er) {
     }
     var GLOBSTAR = minimatch.GLOBSTAR = Minimatch.GLOBSTAR = {};
@@ -5721,9 +5714,9 @@ var require_internal_path = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Path = void 0;
-    var path3 = __importStar2(__require("path"));
+    var path3 = __importStar2(require("path"));
     var pathHelper = __importStar2(require_internal_path_helper());
-    var assert_1 = __importDefault2(__require("assert"));
+    var assert_1 = __importDefault2(require("assert"));
     var IS_WINDOWS = process.platform === "win32";
     var Path = class {
       constructor(itemPath) {
@@ -5816,10 +5809,10 @@ var require_internal_pattern = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Pattern = void 0;
-    var os = __importStar2(__require("os"));
-    var path3 = __importStar2(__require("path"));
+    var os = __importStar2(require("os"));
+    var path3 = __importStar2(require("path"));
     var pathHelper = __importStar2(require_internal_path_helper());
-    var assert_1 = __importDefault2(__require("assert"));
+    var assert_1 = __importDefault2(require("assert"));
     var minimatch_1 = require_minimatch();
     var internal_match_kind_1 = require_internal_match_kind();
     var internal_path_1 = require_internal_path();
@@ -6102,9 +6095,9 @@ var require_internal_globber = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DefaultGlobber = void 0;
     var core2 = __importStar2(require_core());
-    var fs3 = __importStar2(__require("fs"));
+    var fs3 = __importStar2(require("fs"));
     var globOptionsHelper = __importStar2(require_internal_glob_options_helper());
-    var path3 = __importStar2(__require("path"));
+    var path3 = __importStar2(require("path"));
     var patternHelper = __importStar2(require_internal_pattern_helper());
     var internal_match_kind_1 = require_internal_match_kind();
     var internal_pattern_1 = require_internal_pattern();
@@ -6330,12 +6323,12 @@ var require_internal_hash_files = __commonJS({
     };
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.hashFiles = void 0;
-    var crypto = __importStar2(__require("crypto"));
+    var crypto = __importStar2(require("crypto"));
     var core2 = __importStar2(require_core());
-    var fs3 = __importStar2(__require("fs"));
-    var stream = __importStar2(__require("stream"));
-    var util = __importStar2(__require("util"));
-    var path3 = __importStar2(__require("path"));
+    var fs3 = __importStar2(require("fs"));
+    var stream = __importStar2(require("stream"));
+    var util = __importStar2(require("util"));
+    var path3 = __importStar2(require("path"));
     function hashFiles(globber) {
       var e_1, _a;
       var _b;
@@ -14934,7 +14927,7 @@ var require_mime_types = __commonJS({
   "node_modules/mime-types/index.js"(exports) {
     "use strict";
     var db = require_mime_db();
-    var extname = __require("path").extname;
+    var extname = require("path").extname;
     var EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/;
     var TEXT_TYPE_REGEXP = /^text\//i;
     exports.charset = charset;
@@ -15021,6 +15014,10 @@ var require_mime_types = __commonJS({
 });
 
 // src/index.ts
+var src_exports = {};
+__export(src_exports, {
+  getActionParams: () => getActionParams
+});
 var import_core = __toESM(require_core(), 1);
 
 // node_modules/tslib/modules/index.js
@@ -19355,7 +19352,7 @@ var S3SignatureV4 = function() {
     if (!this.sigv4aSigner) {
       var CrtSignerV4_1;
       try {
-        CrtSignerV4_1 = __require("@aws-sdk/signature-v4-crt").CrtSignerV4;
+        CrtSignerV4_1 = require("@aws-sdk/signature-v4-crt").CrtSignerV4;
         if (typeof CrtSignerV4_1 !== "function")
           throw new Error();
       } catch (e) {
@@ -22380,15 +22377,15 @@ function fromEnv() {
 }
 
 // node_modules/@aws-sdk/credential-provider-imds/dist-es/fromContainerMetadata.js
-import { parse as parse3 } from "url";
+var import_url = require("url");
 
 // node_modules/@aws-sdk/credential-provider-imds/dist-es/remoteProvider/httpRequest.js
-import { Buffer as Buffer2 } from "buffer";
-import { request } from "http";
+var import_buffer = require("buffer");
+var import_http = require("http");
 function httpRequest(options) {
   return new Promise(function(resolve, reject) {
     var _a;
-    var req = request(__assign(__assign({ method: "GET" }, options), { hostname: (_a = options.hostname) === null || _a === void 0 ? void 0 : _a.replace(/^\[(.+)\]$/, "$1") }));
+    var req = (0, import_http.request)(__assign(__assign({ method: "GET" }, options), { hostname: (_a = options.hostname) === null || _a === void 0 ? void 0 : _a.replace(/^\[(.+)\]$/, "$1") }));
     req.on("error", function(err) {
       reject(Object.assign(new ProviderError("Unable to connect to instance metadata service"), err));
       req.destroy();
@@ -22408,7 +22405,7 @@ function httpRequest(options) {
         chunks.push(chunk);
       });
       res.on("end", function() {
-        resolve(Buffer2.concat(chunks));
+        resolve(import_buffer.Buffer.concat(chunks));
         req.destroy();
       });
     });
@@ -22516,7 +22513,7 @@ var getCmdsUri = function() {
         }];
       }
       if (process.env[ENV_CMDS_FULL_URI]) {
-        parsed = parse3(process.env[ENV_CMDS_FULL_URI]);
+        parsed = (0, import_url.parse)(process.env[ENV_CMDS_FULL_URI]);
         if (!parsed.hostname || !(parsed.hostname in GREENGRASS_HOSTS)) {
           throw new CredentialsProviderError(parsed.hostname + " is not a valid container metadata service hostname", false);
         }
@@ -22552,9 +22549,9 @@ var fromEnv2 = function(envVarSelector) {
 };
 
 // node_modules/@aws-sdk/shared-ini-file-loader/dist-es/index.js
-import { readFile } from "fs";
-import { homedir } from "os";
-import { join, sep } from "path";
+var import_fs = require("fs");
+var import_os = require("os");
+var import_path = require("path");
 var ENV_CREDENTIALS_PATH = "AWS_SHARED_CREDENTIALS_FILE";
 var ENV_CONFIG_PATH = "AWS_CONFIG_FILE";
 var swallowError = function() {
@@ -22564,7 +22561,7 @@ var loadSharedConfigFiles = function(init) {
   if (init === void 0) {
     init = {};
   }
-  var _a = init.filepath, filepath = _a === void 0 ? process.env[ENV_CREDENTIALS_PATH] || join(getHomeDir(), ".aws", "credentials") : _a, _b = init.configFilepath, configFilepath = _b === void 0 ? process.env[ENV_CONFIG_PATH] || join(getHomeDir(), ".aws", "config") : _b;
+  var _a = init.filepath, filepath = _a === void 0 ? process.env[ENV_CREDENTIALS_PATH] || (0, import_path.join)(getHomeDir(), ".aws", "credentials") : _a, _b = init.configFilepath, configFilepath = _b === void 0 ? process.env[ENV_CONFIG_PATH] || (0, import_path.join)(getHomeDir(), ".aws", "config") : _b;
   return Promise.all([
     slurpFile(configFilepath).then(parseIni).then(normalizeConfigFile).catch(swallowError),
     slurpFile(filepath).then(parseIni).catch(swallowError)
@@ -22644,7 +22641,7 @@ var parseIni = function(iniData) {
 };
 var slurpFile = function(path3) {
   return new Promise(function(resolve, reject) {
-    readFile(path3, "utf8", function(err, data) {
+    (0, import_fs.readFile)(path3, "utf8", function(err, data) {
       if (err) {
         reject(err);
       } else {
@@ -22654,14 +22651,14 @@ var slurpFile = function(path3) {
   });
 };
 var getHomeDir = function() {
-  var _a = process.env, HOME = _a.HOME, USERPROFILE = _a.USERPROFILE, HOMEPATH = _a.HOMEPATH, _b = _a.HOMEDRIVE, HOMEDRIVE = _b === void 0 ? "C:" + sep : _b;
+  var _a = process.env, HOME = _a.HOME, USERPROFILE = _a.USERPROFILE, HOMEPATH = _a.HOMEPATH, _b = _a.HOMEDRIVE, HOMEDRIVE = _b === void 0 ? "C:" + import_path.sep : _b;
   if (HOME)
     return HOME;
   if (USERPROFILE)
     return USERPROFILE;
   if (HOMEPATH)
     return "" + HOMEDRIVE + HOMEPATH;
-  return homedir();
+  return (0, import_os.homedir)();
 };
 
 // node_modules/@aws-sdk/node-config-provider/dist-es/fromSharedConfigFiles.js
@@ -23493,7 +23490,7 @@ var package_default3 = {
 };
 
 // node_modules/@aws-sdk/util-buffer-from/dist-es/index.js
-import { Buffer as Buffer3 } from "buffer";
+var import_buffer2 = require("buffer");
 var fromArrayBuffer = function(input, offset, length) {
   if (offset === void 0) {
     offset = 0;
@@ -23504,21 +23501,21 @@ var fromArrayBuffer = function(input, offset, length) {
   if (!isArrayBuffer(input)) {
     throw new TypeError('The "input" argument must be ArrayBuffer. Received type ' + typeof input + " (" + input + ")");
   }
-  return Buffer3.from(input, offset, length);
+  return import_buffer2.Buffer.from(input, offset, length);
 };
 var fromString = function(input, encoding) {
   if (typeof input !== "string") {
     throw new TypeError('The "input" argument must be of type string. Received type ' + typeof input + " (" + input + ")");
   }
-  return encoding ? Buffer3.from(input, encoding) : Buffer3.from(input);
+  return encoding ? import_buffer2.Buffer.from(input, encoding) : import_buffer2.Buffer.from(input);
 };
 
 // node_modules/@aws-sdk/hash-node/dist-es/index.js
-import { Buffer as Buffer4 } from "buffer";
-import { createHash, createHmac } from "crypto";
+var import_buffer3 = require("buffer");
+var import_crypto = require("crypto");
 var Hash = function() {
   function Hash2(algorithmIdentifier, secret) {
-    this.hash = secret ? createHmac(algorithmIdentifier, castSourceData(secret)) : createHash(algorithmIdentifier);
+    this.hash = secret ? (0, import_crypto.createHmac)(algorithmIdentifier, castSourceData(secret)) : (0, import_crypto.createHash)(algorithmIdentifier);
   }
   Hash2.prototype.update = function(toHash, encoding) {
     this.hash.update(castSourceData(toHash, encoding));
@@ -23529,7 +23526,7 @@ var Hash = function() {
   return Hash2;
 }();
 function castSourceData(toCast, encoding) {
-  if (Buffer4.isBuffer(toCast)) {
+  if (import_buffer3.Buffer.isBuffer(toCast)) {
     return toCast;
   }
   if (typeof toCast === "string") {
@@ -23577,8 +23574,8 @@ function buildQueryString(query) {
 }
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/node-http-handler.js
-import { Agent as hAgent, request as hRequest } from "http";
-import { Agent as hsAgent, request as hsRequest } from "https";
+var import_http2 = require("http");
+var import_https = require("https");
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/constants.js
 var NODEJS_TIMEOUT_ERROR_CODES = ["ECONNRESET", "EPIPE", "ETIMEDOUT"];
@@ -23642,7 +23639,7 @@ var setSocketTimeout = function(request2, reject, timeoutInMs) {
 };
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/write-request-body.js
-import { Readable } from "stream";
+var import_stream = require("stream");
 function writeRequestBody(httpRequest2, request2) {
   var expect = request2.headers["Expect"] || request2.headers["expect"];
   if (expect === "100-continue") {
@@ -23654,7 +23651,7 @@ function writeRequestBody(httpRequest2, request2) {
   }
 }
 function writeBody(httpRequest2, body) {
-  if (body instanceof Readable) {
+  if (body instanceof import_stream.Readable) {
     body.pipe(httpRequest2);
   } else if (body) {
     httpRequest2.end(Buffer.from(body));
@@ -23694,8 +23691,8 @@ var NodeHttpHandler = function() {
     return {
       connectionTimeout,
       socketTimeout,
-      httpAgent: httpAgent || new hAgent({ keepAlive, maxSockets }),
-      httpsAgent: httpsAgent || new hsAgent({ keepAlive, maxSockets })
+      httpAgent: httpAgent || new import_http2.Agent({ keepAlive, maxSockets }),
+      httpsAgent: httpsAgent || new import_https.Agent({ keepAlive, maxSockets })
     };
   };
   NodeHttpHandler2.prototype.destroy = function() {
@@ -23739,7 +23736,7 @@ var NodeHttpHandler = function() {
                 port: request2.port,
                 agent: isSSL ? _this.config.httpsAgent : _this.config.httpAgent
               };
-              var requestFunc = isSSL ? hsRequest : hRequest;
+              var requestFunc = isSSL ? import_https.request : import_http2.request;
               var req = requestFunc(nodeHttpsOptions, function(res) {
                 var httpResponse = new HttpResponse({
                   statusCode: res.statusCode || -1,
@@ -23775,7 +23772,7 @@ var NodeHttpHandler = function() {
 }();
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/node-http2-handler.js
-import { connect, constants } from "http2";
+var import_http22 = require("http2");
 var NodeHttp2Handler = function() {
   function NodeHttp2Handler2(_a) {
     var _b = _a === void 0 ? {} : _a, requestTimeout = _b.requestTimeout, sessionTimeout = _b.sessionTimeout, disableConcurrentStreams = _b.disableConcurrentStreams;
@@ -23832,7 +23829,7 @@ var NodeHttp2Handler = function() {
         rejectOriginal(err);
       };
       var queryString = buildQueryString(query || {});
-      var req = session.request(__assign(__assign({}, request2.headers), (_a2 = {}, _a2[constants.HTTP2_HEADER_PATH] = queryString ? path3 + "?" + queryString : path3, _a2[constants.HTTP2_HEADER_METHOD] = method, _a2)));
+      var req = session.request(__assign(__assign({}, request2.headers), (_a2 = {}, _a2[import_http22.constants.HTTP2_HEADER_PATH] = queryString ? path3 + "?" + queryString : path3, _a2[import_http22.constants.HTTP2_HEADER_METHOD] = method, _a2)));
       req.on("response", function(headers) {
         var httpResponse = new HttpResponse({
           statusCode: headers[":status"] || -1,
@@ -23887,7 +23884,7 @@ var NodeHttp2Handler = function() {
     var existingSessions = sessionCache.get(authority) || [];
     if (existingSessions.length > 0 && !disableConcurrentStreams)
       return existingSessions[0];
-    var newSession = connect(authority);
+    var newSession = (0, import_http22.connect)(authority);
     var destroySessionCb = function() {
       _this.destroySession(newSession);
       _this.deleteSessionFromCache(authority, newSession);
@@ -23921,7 +23918,7 @@ var NodeHttp2Handler = function() {
 }();
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/stream-collector/collector.js
-import { Writable } from "stream";
+var import_stream2 = require("stream");
 var Collector = function(_super) {
   __extends(Collector2, _super);
   function Collector2() {
@@ -23934,7 +23931,7 @@ var Collector = function(_super) {
     callback();
   };
   return Collector2;
-}(Writable);
+}(import_stream2.Writable);
 
 // node_modules/@aws-sdk/node-http-handler/dist-es/stream-collector/index.js
 var streamCollector = function(stream) {
@@ -23970,7 +23967,7 @@ function toBase64(input) {
 }
 
 // node_modules/@aws-sdk/util-body-length-node/dist-es/index.js
-import { lstatSync } from "fs";
+var import_fs2 = require("fs");
 function calculateBodyLength(body) {
   if (!body) {
     return 0;
@@ -23982,18 +23979,18 @@ function calculateBodyLength(body) {
   } else if (typeof body.size === "number") {
     return body.size;
   } else if (typeof body.path === "string") {
-    return lstatSync(body.path).size;
+    return (0, import_fs2.lstatSync)(body.path).size;
   }
 }
 
 // node_modules/@aws-sdk/util-user-agent-node/dist-es/index.js
-import { platform, release } from "os";
-import { env, versions } from "process";
+var import_os2 = require("os");
+var import_process = require("process");
 
 // node_modules/@aws-sdk/util-user-agent-node/dist-es/is-crt-available.js
 var isCrtAvailable = function() {
   try {
-    if (typeof __require === "function" && typeof module !== "undefined" && module.require && __require("aws-crt")) {
+    if (typeof require === "function" && typeof module !== "undefined" && module.require && require("aws-crt")) {
       return ["md/crt-avail"];
     }
     return null;
@@ -24009,9 +24006,9 @@ var defaultUserAgent = function(_a) {
   var serviceId = _a.serviceId, clientVersion = _a.clientVersion;
   var sections = [
     ["aws-sdk-js", clientVersion],
-    ["os/" + platform(), release()],
+    ["os/" + (0, import_os2.platform)(), (0, import_os2.release)()],
     ["lang/js"],
-    ["md/nodejs", "" + versions.node]
+    ["md/nodejs", "" + import_process.versions.node]
   ];
   var crtAvailable = isCrtAvailable();
   if (crtAvailable) {
@@ -24020,8 +24017,8 @@ var defaultUserAgent = function(_a) {
   if (serviceId) {
     sections.push(["api/" + serviceId, clientVersion]);
   }
-  if (env.AWS_EXECUTION_ENV) {
-    sections.push(["exec-env/" + env.AWS_EXECUTION_ENV]);
+  if (import_process.env.AWS_EXECUTION_ENV) {
+    sections.push(["exec-env/" + import_process.env.AWS_EXECUTION_ENV]);
   }
   var appIdPromise = loadConfig({
     environmentVariableSelector: function(env2) {
@@ -24559,9 +24556,9 @@ var getMasterProfileName = function(init) {
 };
 
 // node_modules/@aws-sdk/credential-provider-sso/dist-es/index.js
-import { createHash as createHash2 } from "crypto";
-import { readFileSync } from "fs";
-import { join as join2 } from "path";
+var import_crypto2 = require("crypto");
+var import_fs3 = require("fs");
+var import_path2 = require("path");
 var EXPIRE_WINDOW_MS = 15 * 60 * 1e3;
 var SHOULD_FAIL_CREDENTIAL_CHAIN = false;
 var fromSSO = function(init) {
@@ -24614,11 +24611,11 @@ var resolveSSOCredentials = function(_a) {
     return __generator(this, function(_d) {
       switch (_d.label) {
         case 0:
-          hasher = createHash2("sha1");
+          hasher = (0, import_crypto2.createHash)("sha1");
           cacheName = hasher.update(ssoStartUrl).digest("hex");
-          tokenFile = join2(getHomeDir(), ".aws", "sso", "cache", cacheName + ".json");
+          tokenFile = (0, import_path2.join)(getHomeDir(), ".aws", "sso", "cache", cacheName + ".json");
           try {
-            token = JSON.parse(readFileSync(tokenFile, { encoding: "utf-8" }));
+            token = JSON.parse((0, import_fs3.readFileSync)(tokenFile, { encoding: "utf-8" }));
             if (new Date(token.expiresAt).getTime() - Date.now() <= EXPIRE_WINDOW_MS) {
               throw new Error("SSO token is expired.");
             }
@@ -24663,7 +24660,7 @@ var isSsoProfile = function(arg) {
 };
 
 // node_modules/@aws-sdk/credential-provider-web-identity/dist-es/fromTokenFile.js
-import { readFileSync as readFileSync2 } from "fs";
+var import_fs4 = require("fs");
 
 // node_modules/@aws-sdk/credential-provider-web-identity/dist-es/fromWebToken.js
 var fromWebToken = function(init) {
@@ -24708,7 +24705,7 @@ var resolveTokenFile = function(init) {
   if (!webIdentityTokenFile || !roleArn) {
     throw new CredentialsProviderError("Web identity configuration not specified");
   }
-  return fromWebToken(__assign(__assign({}, init), { webIdentityToken: readFileSync2(webIdentityTokenFile, { encoding: "ascii" }), roleArn, roleSessionName }))();
+  return fromWebToken(__assign(__assign({}, init), { webIdentityToken: (0, import_fs4.readFileSync)(webIdentityTokenFile, { encoding: "ascii" }), roleArn, roleSessionName }))();
 };
 
 // node_modules/@aws-sdk/credential-provider-ini/dist-es/index.js
@@ -24841,7 +24838,7 @@ var resolveWebIdentityCredentials = function(profile, options) {
 };
 
 // node_modules/@aws-sdk/credential-provider-process/dist-es/index.js
-import { exec } from "child_process";
+var import_child_process = require("child_process");
 var fromProcess = function(init) {
   if (init === void 0) {
     init = {};
@@ -24921,7 +24918,7 @@ var resolveProcessCredentials = function(profileName, profiles) {
 };
 var execPromise = function(command) {
   return new Promise(function(resolve, reject) {
-    exec(command, function(error, stdout) {
+    (0, import_child_process.exec)(command, function(error, stdout) {
       if (error) {
         reject(error);
         return;
@@ -25847,7 +25844,7 @@ var EventStreamMarshaller2 = function() {
 }();
 
 // node_modules/@aws-sdk/eventstream-serde-node/dist-es/EventStreamMarshaller.js
-import { Readable as Readable2 } from "stream";
+var import_stream3 = require("stream");
 
 // node_modules/@aws-sdk/eventstream-serde-node/dist-es/utils.js
 function readabletoIterable(readStream) {
@@ -25918,11 +25915,11 @@ var EventStreamMarshaller3 = function() {
   };
   EventStreamMarshaller4.prototype.serialize = function(input, serializer) {
     var serializedIterable = this.universalMarshaller.serialize(input, serializer);
-    if (typeof Readable2.from === "function") {
-      return Readable2.from(serializedIterable);
+    if (typeof import_stream3.Readable.from === "function") {
+      return import_stream3.Readable.from(serializedIterable);
     } else {
       var iterator_1 = serializedIterable[Symbol.asyncIterator]();
-      var serializedStream_1 = new Readable2({
+      var serializedStream_1 = new import_stream3.Readable({
         autoDestroy: true,
         objectMode: true,
         read: function() {
@@ -25962,10 +25959,10 @@ var eventStreamSerdeProvider = function(options) {
 };
 
 // node_modules/@aws-sdk/hash-stream-node/dist-es/fileStreamHasher.js
-import { createReadStream } from "fs";
+var import_fs5 = require("fs");
 
 // node_modules/@aws-sdk/hash-stream-node/dist-es/HashCalculator.js
-import { Writable as Writable2 } from "stream";
+var import_stream4 = require("stream");
 var HashCalculator = function(_super) {
   __extends(HashCalculator2, _super);
   function HashCalculator2(hash, options) {
@@ -25982,7 +25979,7 @@ var HashCalculator = function(_super) {
     callback();
   };
   return HashCalculator2;
-}(Writable2);
+}(import_stream4.Writable);
 
 // node_modules/@aws-sdk/hash-stream-node/dist-es/fileStreamHasher.js
 var fileStreamHasher = function(hashCtor, fileStream) {
@@ -25991,7 +25988,7 @@ var fileStreamHasher = function(hashCtor, fileStream) {
       reject(new Error("Unable to calculate hash for non-file streams."));
       return;
     }
-    var fileStreamTee = createReadStream(fileStream.path, {
+    var fileStreamTee = (0, import_fs5.createReadStream)(fileStream.path, {
       start: fileStream.start,
       end: fileStream.end
     });
@@ -26535,18 +26532,18 @@ var S3Client = function(_super) {
 }(Client);
 
 // src/uploadFiles.ts
-import { promises as fs } from "fs";
-import path from "path";
+var import_fs6 = require("fs");
+var import_path3 = __toESM(require("path"), 1);
 async function uploadFiles({ files: files4, sourceDir, storageService, hostingConfig }) {
   const fileInfos = files4.map((file) => ({
-    config: hostingConfig.files.find((x) => x.path === path.relative(sourceDir, file)),
+    config: hostingConfig.files.find((x) => x.path === import_path3.default.relative(sourceDir, file)),
     file
   }));
   async function uploadFile({ file, config }) {
-    const key = path.relative(sourceDir, file);
+    const key = import_path3.default.relative(sourceDir, file);
     await storageService.uploadFile(__spreadValues({
       key,
-      body: await fs.readFile(file)
+      body: await import_fs6.promises.readFile(file)
     }, config ? getS3ObjectParams(config.headers) : {}));
   }
   const nonEntrypoints = fileInfos.filter(({ config }) => !(config == null ? void 0 : config.isEntrypoint));
@@ -26638,9 +26635,9 @@ function calculateChanges({
 
 // src/getSourceFiles.ts
 var glob = __toESM(require_glob(), 1);
-import path2 from "path";
+var import_path4 = __toESM(require("path"), 1);
 async function getSourceFiles({ sourceDir }) {
-  const globber = await glob.create(path2.join(sourceDir, "**"), {
+  const globber = await glob.create(import_path4.default.join(sourceDir, "**"), {
     matchDirectories: false
   });
   return await globber.glob();
@@ -26728,8 +26725,8 @@ async function readableToString(readable) {
 }
 
 // src/action.ts
-import { constants as constants2 } from "fs";
-import { promises as fs2 } from "fs";
+var import_fs7 = require("fs");
+var import_fs8 = require("fs");
 var entryPointFileNames = ["index.html", "index.htm", "manifest.json", "asset-manifest.json"];
 var defaultHostingConfig = {
   files: entryPointFileNames.map((path3) => ({
@@ -26747,13 +26744,13 @@ async function action({ sourceDir, bucket, maxDays }) {
   const hostingConfig = await readHostingConfig() ?? defaultHostingConfig;
   await deployAssets({ storageService, sourceDir, hostingConfig, maxDays });
 }
-var fileExists = (file) => fs2.access(file, constants2.R_OK).then(() => true).catch(() => false);
+var fileExists = (file) => import_fs8.promises.access(file, import_fs7.constants.R_OK).then(() => true).catch(() => false);
 async function readHostingConfig() {
   const hostingFileName = "hosting.json";
   if (!await fileExists(hostingFileName)) {
     return null;
   }
-  const hostingFileContent = await fs2.readFile(hostingFileName);
+  const hostingFileContent = await import_fs8.promises.readFile(hostingFileName);
   const hostingConfig = JSON.parse(hostingFileContent.toString());
   return hostingConfig;
 }
@@ -26772,15 +26769,15 @@ function getActionParams() {
     }))
   };
 }
-try {
-  await action(getActionParams());
-} catch (error) {
+action(getActionParams()).catch((error) => {
   console.error(error);
   import_core.default.setFailed(error instanceof Error ? error.message : "Some error occurred");
-}
-export {
+});
+module.exports = __toCommonJS(src_exports);
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
   getActionParams
-};
+});
 /*!
  * mime-db
  * Copyright(c) 2014 Jonathan Ong

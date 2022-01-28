@@ -2,11 +2,11 @@
   "name": "s3-deployment-action",
   "version": "0.1.0",
   "type": "module",
-  "exports": "./dist/main.mjs",
+  "exports": "./dist/main.cjs",
   "scripts": {
-    "dist": "rm -rf dist && esbuild src/index.ts --outfile=dist/index.mjs --format=esm --bundle --tsconfig=tsconfig.json --platform=node --target=node16 --main-fields=module,main",
+    "dist": "rm -rf dist && esbuild src/index.ts --outfile=dist/index.cjs --format=cjs --bundle --tsconfig=tsconfig.json --platform=node --target=node16 --main-fields=module,main",
     "test": "jest src",
-    "start": "node dist/index.mjs",
+    "start": "node dist/index.cjs",
     "prepare": "husky install"
   },
   "dependencies": {
